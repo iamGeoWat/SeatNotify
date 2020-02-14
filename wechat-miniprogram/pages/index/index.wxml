@@ -1,0 +1,44 @@
+<!--index.wxml-->
+<view class="container">
+  <view wx:if="{{!loggedIn}}" style="text-align: center">
+    <image src="/images/logo.jpg" style='width: 400px; height: 140px; margin-top: 150px'></image>
+    <van-button type="primary" color="#E62953" size="normal" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">登录</van-button>
+  </view>
+  <view wx:if="{{loggedIn}}">
+    <view wx:if="{{activeTab === 0}}">
+      <van-cell-group>
+        <van-field value="{{selectedCity[0].name+selectedCity[1].name}}" center clearable label="考试城市" placeholder="请选择" border="{{false}}" use-button-slot>
+          <van-button slot="button" size="small" type="info" bind:click="onCitySelectorOpen">选择城市</van-button>
+        </van-field>
+      </van-cell-group>
+      <van-tabs wx:if="{{cityInfoToShow.length}}" border="{{fasle}}" color="#1870F8" active="{{activeDisplayType}}" bind:change="onDisplayTypeChange">
+        <van-tab title="按日期">
+        <view style="height: calc(100vh - 150px)">
+          <van-cell-group wx:for="{{cityInfoToShow}}" title="{{item[item.category]}}">
+            <van-cell wx:for="{{item.data}}" title="{{item.centerCode+' '+item.centerNameCn+' '+item.testTime}} {{item.seatStatus===0?'🈵️':'🈶️'}}"></van-cell>
+          </van-cell-group>
+          </view>
+        </van-tab>
+        <van-tab title="按考场">
+          <van-cell-group wx:for="{{cityInfoToShow}}" title="{{item[item.category]}}">
+            <van-cell wx:for="{{item.data}}" title="{{item.centerCode+' '+item.date+' '+item.testTime}} {{item.seatStatus===0?'🈵️':'🈶️'}}"></van-cell>
+          </van-cell-group>
+        </van-tab>
+      </van-tabs>
+      <van-popup show="{{showCitySelector}}" bind:close="onCitySelectorCancel" position="bottom">
+        <van-area area-list="{{cityList}}" value="110101" columns-num="{{2}}" bind:confirm="onCitySelectorConfirm" bind:cancel="onCitySelectorCancel"></van-area>
+      </van-popup>
+    </view>
+    <view wx:if="{{activeTab === 1}}">
+    2
+    </view>
+    <view wx:if="{{activeTab === 2}}">
+    3
+    </view>
+    <van-tabbar active="{{activeTab}}" bind:change="onTabChange">
+      <van-tabbar-item icon="search">考位查询</van-tabbar-item>
+      <van-tabbar-item icon="eye-o">考位监控</van-tabbar-item>
+      <van-tabbar-item icon="user-circle-o">个人信息</van-tabbar-item>
+    </van-tabbar>
+  </view>
+</view>

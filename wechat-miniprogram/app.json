@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "看看考位助手",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-button": "./vant/button/index",
+    "van-tabbar": "./vant/tabbar/index",
+    "van-tabbar-item": "./vant/tabbar-item/index",
+    "van-popup": "./vant/popup/index",
+    "van-area": "./vant/area/index",
+    "van-cell-group": "./vant/cell-group/index",
+    "van-cell": "./vant/cell/index",
+    "van-field": "./vant/field/index",
+    "van-tabs": "./vant/tabs/index",
+    "van-tab": "./vant/tab/index",
+    "van-index-bar": "./vant/index-bar/index",
+    "van-index-anchor": "./vant/index-anchor/index"
+  }
+}
