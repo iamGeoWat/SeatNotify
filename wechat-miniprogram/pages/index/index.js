@@ -1,5 +1,6 @@
 //index.js
 //获取应用实例
+import Toast from '../../vant/toast/toast.js'
 const app = getApp()
 
 Page({
@@ -89,138 +90,51 @@ Page({
     selectedCity: [{code:'',name:''},{code:'',name:''}],
     showCitySelector: false,
     activeTab: 0,
-    loggedIn: true,
+    loggedIn: false,
     userInfo: {},
+    uid: null,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
   loadSelectedCityInfo(city) {
-    this.setData({
-      selectedCityInfo: [{
-        centerCode: 'STN80008A',
-        centerNameCn: '中国科学技术大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-10',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80008B',
-        centerNameCn: '中国科学技术大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-15',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009A',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 1,
-        testTime: ' 09:00',
-        date: '2020-03-11',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-12',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-15',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-18',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-19',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-17',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009A',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 1,
-        testTime: ' 09:00',
-        date: '2020-03-11',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-12',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-15',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-18',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-19',
-        city: 'BEIJING'
-      }, {
-        centerCode: 'STN80009B',
-        centerNameCn: '北京大学',
-        testFee: '198500',
-        seatStatus: 0,
-        testTime: ' 09:00',
-        date: '2020-03-17',
-        city: 'BEIJING'
-      }]
+    var that = this
+    console.log(city)
+    Toast.loading({
+      mask: true,
+      message: '加载中...',
+      duration: 0
     })
-
-    if (this.data.activeDisplayType === 0) {
-      this.setData({
-        cityInfoToShow: this.sortCityInfo(this.data.selectedCityInfo, "date")
-      })
-    } else if (this.data.activeDisplayType === 1) {
-      this.setData({
-        cityInfoToShow: this.sortCityInfo(this.data.selectedCityInfo, "centerNameCn")
-      })
-    }
+    //load information on server here
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: 'seatInfoByCity',
+      // 传给云函数的参数
+      data: {
+        province: city[0].name,
+        city: city[1].name
+      },
+      success: function (res) {
+        Toast.clear()
+        console.log(res.result)
+        that.setData({
+          selectedCityInfo: res.result,
+        })
+        if (that.data.activeDisplayType === 0) {
+          that.setData({
+            cityInfoToShow: that.sortCityInfo(that.data.selectedCityInfo, "date")
+          })
+        } else if (that.data.activeDisplayType === 1) {
+          that.setData({
+            cityInfoToShow: that.sortCityInfo(that.data.selectedCityInfo, "centerNameCn")
+          })
+        }
+      },
+      fail: function() {
+        Toast.fail('网络错误')
+        console.error
+      }
+    })
   },
   onDisplayTypeChange(e) {
     this.setData({
@@ -256,14 +170,20 @@ Page({
     var that = this
     this.setData({
       userInfo: e.detail.userInfo,
-      avatarUrl: e.detail.userInfo.avatarUrl
     })
-    // console.log(this.data.userInfo)
+    console.log(that.data.userInfo)
     app.globalData.userInfo = e.detail.userInfo
     wx.login({
       success: function (res) {
         console.log(res)
+        that.setData({
+          uid: res.code
+        })
+        app.globalData.uid = res.code
       }
+    })
+    that.setData({
+      loggedIn: true
     })
   },
   bindViewTap: function() {

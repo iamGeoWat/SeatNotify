@@ -1,13 +1,16 @@
 <!--index.wxml-->
 <view class="container">
+  <van-toast id="van-toast" />
   <view wx:if="{{!loggedIn}}" style="text-align: center">
-    <image src="/images/logo.jpg" style='width: 400px; height: 140px; margin-top: 150px'></image>
-    <van-button type="primary" color="#E62953" size="normal" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">登录</van-button>
+    <view style="margin-top: 50%">
+      <van-image src="/images/logo.jpg" width="400px" height="140px" />
+      <van-button type="primary" color="#E62953" size="normal" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">登录</van-button>
+    </view>
   </view>
   <view wx:if="{{loggedIn}}">
     <view wx:if="{{activeTab === 0}}">
       <van-cell-group>
-        <van-field value="{{selectedCity[0].name+selectedCity[1].name}}" center clearable label="考试城市" placeholder="请选择" border="{{false}}" use-button-slot>
+        <van-field disabled value="{{selectedCity[0].name+selectedCity[1].name}}" center clearable label="考试城市" placeholder="请选择" border="{{false}}" use-button-slot>
           <van-button slot="button" size="small" type="info" bind:click="onCitySelectorOpen">选择城市</van-button>
         </van-field>
       </van-cell-group>
@@ -30,15 +33,26 @@
       </van-popup>
     </view>
     <view wx:if="{{activeTab === 1}}">
-    2
+    开发中...
     </view>
     <view wx:if="{{activeTab === 2}}">
-    3
+      <van-cell-group title="关于">
+        <van-cell title="uid" label="用户唯一识别码">{{uid}}</van-cell>
+        <van-cell border="{{false}}">出现 bug 请联系 realgeowat@gmail.com</van-cell>
+        <van-cell border="{{false}}">欢迎订阅公众号“教英语的”</van-cell>
+        <van-cell border="{{false}}">
+          <view>服务器也有开销，欢迎您支持我们的运营
+            <view style="margin-top: 15px">
+              <van-image width="50vw" height="50vw" fit="cover" src="../../images/zan-code.jpg" />
+            </view>
+          </view>
+        </van-cell>
+      </van-cell-group>
     </view>
     <van-tabbar active="{{activeTab}}" bind:change="onTabChange">
       <van-tabbar-item icon="search">考位查询</van-tabbar-item>
       <van-tabbar-item icon="eye-o">考位监控</van-tabbar-item>
-      <van-tabbar-item icon="user-circle-o">个人信息</van-tabbar-item>
+      <van-tabbar-item icon="user-circle-o">更多信息</van-tabbar-item>
     </van-tabbar>
   </view>
 </view>

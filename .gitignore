@@ -4,4 +4,5 @@
 .idea/
 notes/
 wechat-miniprogram/vant/
+wechat-miniprogram/cloudfunctions/seatInfoByCity/node_modules
 server/client-service/node_modules

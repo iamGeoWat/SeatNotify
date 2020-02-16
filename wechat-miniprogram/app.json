@@ -22,6 +22,8 @@
     "van-tabs": "./vant/tabs/index",
     "van-tab": "./vant/tab/index",
     "van-index-bar": "./vant/index-bar/index",
-    "van-index-anchor": "./vant/index-anchor/index"
+    "van-index-anchor": "./vant/index-anchor/index",
+    "van-toast": "./vant/toast/index",
+    "van-image": "./vant/image/index"
   }
 }
