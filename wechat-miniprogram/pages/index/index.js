@@ -84,19 +84,32 @@ Page({
         360300: '温州',
       }
     },
+    cityToSub: [{ code: '', name: '' }, { code: '', name: '' }],
     activeDisplayType: 0,
     cityInfoToShow: [],
     selectedCityInfo: [],
     selectedCity: [{code:'',name:''},{code:'',name:''}],
     showCitySelector: false,
-    activeTab: 0,
-    loggedIn: false,
+    activeTab: 1, //change in production
+    loggedIn: true, //change in production
+    confirmEntry: true, //change in production
     userInfo: {},
-    uid: null,
+    uid: '未登录',
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
+  onCityToSubConfirm(e) {
+    this.setData({
+      cityToSub: e.detail.values,
+      showCitySelector: false
+    })
+  },
+  onConfirmEntry() {
+    this.setData({
+      confirmEntry: true
+    })
+  },
   loadSelectedCityInfo(city) {
     var that = this
     console.log(city)
@@ -140,7 +153,16 @@ Page({
     this.setData({
       activeDisplayType: e.detail.index
     })
-    this.loadSelectedCityInfo(this.data.selectedCity)
+    // this.loadSelectedCityInfo(this.data.selectedCity)
+    if (this.data.activeDisplayType === 0) {
+      this.setData({
+        cityInfoToShow: this.sortCityInfo(this.data.selectedCityInfo, "date")
+      })
+    } else if (this.data.activeDisplayType === 1) {
+      this.setData({
+        cityInfoToShow: this.sortCityInfo(this.data.selectedCityInfo, "centerNameCn")
+      })
+    }
     console.log(this.data.activeDisplayType)
   },
   onCitySelectorConfirm(e) {
