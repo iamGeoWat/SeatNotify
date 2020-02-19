@@ -39,10 +39,13 @@
       <van-tabs wx:if="{{loggedIn}}" color="#1870F8" border="{{false}}">
         <van-tab title="添加新订阅">
           <view>
-            <van-cell-group>
+            <van-cell-group title="按城市订阅">
               <van-field disabled value="{{cityToSub[0].name+cityToSub[1].name}}" center clearable label="考试城市" placeholder="请选择" border="{{false}}" use-button-slot>
                 <van-button slot="button" size="small" type="info" bind:click="onCitySelectorOpen">选择城市</van-button>
               </van-field>
+              <van-cell>
+                <van-button disabled="{{!cityToSub[0].name}}" bind:click="onSubmitCityToSub">提交</van-button>
+              </van-cell>
             </van-cell-group>
           </view>
         </van-tab>

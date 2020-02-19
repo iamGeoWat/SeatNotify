@@ -84,6 +84,7 @@ Page({
         360300: '温州',
       }
     },
+
     cityToSub: [{ code: '', name: '' }, { code: '', name: '' }],
     activeDisplayType: 0,
     cityInfoToShow: [],
@@ -99,6 +100,32 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
+  onSubmitCityToSub () {
+    var that = this
+    console.log(this.data.cityToSub)
+    Toast.loading({
+      mask: true,
+      message: '正在提交...',
+      duration: 0
+    })
+    // todo: realize this part
+    wx.cloud.callFunction({
+      name: 'submitCityToSub',
+      data: {
+        province: that.data.cityToSub[0].name,
+        city: that.data.cityToSub[1].name
+      },
+      success: function(res) {
+        Toast.clear()
+      },
+      fail: function () {
+        Toast.clear()
+        Toast.fail('网络错误')
+        console.error
+      }
+    })
+    Toast.clear()
+  },
   onCityToSubConfirm(e) {
     this.setData({
       cityToSub: e.detail.values,
@@ -144,6 +171,7 @@ Page({
         }
       },
       fail: function() {
+        Toast.clear()
         Toast.fail('网络错误')
         console.error
       }

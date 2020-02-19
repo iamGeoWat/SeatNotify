@@ -22,9 +22,9 @@ driver = webdriver.Firefox(executable_path = firefox)
 
 #%%
 driver.get('https://toefl.neea.edu.cn/')
-time.sleep(30)  # 30 seconds to login
+time.sleep(300)  # 300 seconds to login
 
-#%% 获取地址和日期
+# 获取地址
 citiesJSON = driver.execute_script('return $.getJSON("/getTestCenterProvinceCity")')
 
 citiesList = []
@@ -34,14 +34,13 @@ for i in range(len(citiesJSON)):
 		citiesList.append(city['cityNameEn'])
 
 
-daysJSON = driver.execute_script('return $.getJSON("testDays")')
-daysList = list(daysJSON)
-
 #continuously fetch data
-#for develop record use
-f = open("res.txt", 'w+')
 
 while True:
+	# 获取考试日期
+	daysJSON = driver.execute_script('return $.getJSON("testDays")')
+	daysList = list(daysJSON)
+
 	storage = pd.DataFrame()
 	for city in citiesList:
 		for date in daysList[0:9]:
@@ -63,14 +62,14 @@ while True:
 					df['date'] = date
 					storage = pd.concat([storage, df], ignore_index=True)
 					print(storage)
-					#for develop record use
-					f.seek(0)
-					f.truncate()
-					print(storage.to_dict('records'), file=f)
 				time.sleep(1)
 			except Exception as e:
 				print(str(e))
 				break
 	# storage go to redis
 	Redis.set('seat', str(storage.to_dict('records')))
+
+	Redis.set('days_list', str(daysList[0:9]))
+	update_timestamp = time.time()
+	Redis.set('update_timestamp', int(update_timestamp))
 	time.sleep(10)
