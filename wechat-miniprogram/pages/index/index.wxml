@@ -17,6 +17,7 @@
       <van-tabs wx:if="{{cityInfoToShow.length}}" border="{{fasle}}" color="#1870F8" active="{{activeDisplayType}}" bind:change="onDisplayTypeChange">
         <van-tab title="按日期">
           <view style="height: calc(100vh - 150px)">
+            <van-cell-group title="最后更新于：{{lastUpdateTime}}"></van-cell-group>
             <van-cell-group wx:for="{{cityInfoToShow}}" title="{{item[item.category]}}">
               <van-cell wx:for="{{item.data}}" title="{{item.centerCode+' '+item.centerNameCn+' '+item.testTime}} {{item.seatStatus===0?'🈵️':'🈶️'}}"></van-cell>
             </van-cell-group>
@@ -43,19 +44,27 @@
               <van-field disabled value="{{cityToSub[0].name+cityToSub[1].name}}" center clearable label="考试城市" placeholder="请选择" border="{{false}}" use-button-slot>
                 <van-button slot="button" size="small" type="info" bind:click="onCitySelectorOpen">选择城市</van-button>
               </van-field>
+              <van-field disabled value="{{selectedTestDate}}" center clearable label="考试日期" placeholder="请选择" border="{{false}}" use-button-slot>
+                <van-button slot="button" size="small" type="info" bind:click="onTestDateSelectorOpen">选择日期</van-button>
+              </van-field>
               <van-cell>
-                <van-button disabled="{{!cityToSub[0].name}}" bind:click="onSubmitCityToSub">提交</van-button>
+                <van-button disabled="{{!(cityToSub[0].name && selectedTestDate)}}" bind:click="onSubmitCityToSub">提交</van-button>
               </van-cell>
             </van-cell-group>
           </view>
         </van-tab>
         <van-tab title="已订阅">
-          2
+          <view>
+            
+          </view>
         </van-tab>
         <van-tab title="使用帮助">
           3
         </van-tab>
       </van-tabs>
+      <van-popup show="{{showTestDateSelector}}" bind:close="onTestDateSelectorCancel" position="bottom">
+        <van-picker show-toolbar columns="{{testDaysList}}" bind:confirm="onTestDateSelectorConfirm" bind:cancel="onTestDateSelectorCancel"></van-picker>
+      </van-popup>
       <van-popup show="{{showCitySelector}}" bind:close="onCitySelectorCancel" position="bottom">
         <van-area area-list="{{cityList}}" value="110101" columns-num="{{2}}" bind:confirm="onCityToSubConfirm" bind:cancel="onCitySelectorCancel"></van-area>
       </van-popup>

@@ -84,7 +84,10 @@ Page({
         360300: '温州',
       }
     },
-
+    selectedTestDate: '',
+    showTestDateSelector: false,
+    testDaysList: [],
+    lastUpdateTime: '',
     cityToSub: [{ code: '', name: '' }, { code: '', name: '' }],
     activeDisplayType: 0,
     cityInfoToShow: [],
@@ -100,6 +103,23 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
+  onTestDateSelectorOpen () {
+    this.setData({
+      showTestDateSelector: true
+    })
+  },
+  onTestDateSelectorConfirm (e) {
+    console.log(e)
+    this.setData({
+      selectedTestDate: e.detail.value,
+      showTestDateSelector: false
+    })
+  },
+  onTestDateSelectorCancel () {
+    this.setData({
+      showTestDateSelector: false
+    })
+  },
   onSubmitCityToSub () {
     var that = this
     console.log(this.data.cityToSub)
@@ -176,6 +196,19 @@ Page({
         console.error
       }
     })
+    // load last update time
+    wx.cloud.callFunction({
+      name: 'lastUpdateTime',
+      success: function (res) {
+        console.log(res.result)
+        var date = new Date(parseInt(res.result)*1000)
+        var timeString = date.toLocaleString()
+        console.log(timeString)
+        that.setData({
+          lastUpdateTime: timeString
+        })
+      }
+    })
   },
   onDisplayTypeChange(e) {
     this.setData({
@@ -212,8 +245,33 @@ Page({
     })
   },
   onTabChange(e) {
+    console.log('tab changed', e.detail)
+    var that = this
     this.setData({
       activeTab: e.detail
+    })
+  },
+  loadTestDays () {
+    wx.cloud.callFunction({
+      name: 'testDaysList',
+      success: function (res) {
+        console.log(res.result)
+        var str = res.result.substring(res.result.indexOf('[') + 1, res.result.lastIndexOf(']'))
+        console.log(str)
+        var reg = new RegExp("'", "g")
+        var str = str.replace(reg, "")
+        var arr = str.split(',')
+        console.log(arr)
+        that.setData({
+          testDaysList: arr
+        })
+        console.log(that.data)
+
+      },
+      fail: function () {
+        Toast.fail('获取考试日期错误')
+        console.error
+      }
     })
   },
   onGotUserInfo(e) {
@@ -235,6 +293,7 @@ Page({
     that.setData({
       loggedIn: true
     })
+    that.loadTestDays()
   },
   bindViewTap: function() {
     wx.navigateTo({
