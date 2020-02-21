@@ -62,7 +62,7 @@ while True:
 					df['date'] = date
 					storage = pd.concat([storage, df], ignore_index=True)
 					print(storage)
-				time.sleep(1)
+				time.sleep(3)
 			except Exception as e:
 				print(str(e))
 				break

@@ -176,6 +176,9 @@ Page({
       },
       success: function (res) {
         Toast.clear()
+        if (res.result.length === 0) {
+          Toast.fail('网络错误')
+        }
         console.log(res.result)
         that.setData({
           selectedCityInfo: res.result,
