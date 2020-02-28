@@ -5,6 +5,9 @@
     <view style="margin-top: 50%">
       <van-image src="/images/logo.jpg" width="380px" height="130px" />
       <van-button type="primary" color="#E62953" size="normal" bind:click="onConfirmEntry">进入小程序!</van-button>
+      <view style="font-style: italic; color: grey; position: absolute; bottom: 20px; text-align: center; width: 100%">
+        by GeoWat@1.3ac
+      </view>
     </view>
   </view>
   <view wx:if="{{confirmEntry}}">
@@ -36,10 +39,15 @@
       </van-popup>
     </view>
     <view wx:if="{{activeTab === 1}}">
-      <view wx:if="{{!loggedIn}}">请在 登录/关于 页面登录以使用考位监控功能</view>
-      <van-tabs wx:if="{{loggedIn}}" color="#1870F8" border="{{false}}">
+      <view wx:if="{{!loggedIn}}">
+        <van-overlay show="{{true}}">
+          <view style="display: flex; align-items: center; justify-content: center; height: 100%; color: white">请在右下 登录/关于 点击登录以使用此功能 注：服务器端功能未完成，此页面仅预览使用。</view>
+          <!-- change text in production -->
+        </van-overlay>
+      </view>
+      <van-tabs wx:if="{{loggedIn}}" color="#1870F8" border="{{false}}" bind:change="onSubTabChange">
         <van-tab title="添加新订阅">
-          <view>
+          <view style="height: calc(100vh - 100px)">
             <van-cell-group title="按城市订阅">
               <van-field disabled value="{{cityToSub[0].name+cityToSub[1].name}}" center clearable label="考试城市" placeholder="请选择" border="{{false}}" use-button-slot>
                 <van-button slot="button" size="small" type="info" bind:click="onCitySelectorOpen">选择城市</van-button>
@@ -54,12 +62,42 @@
           </view>
         </van-tab>
         <van-tab title="已订阅">
-          <view>
-            
+          <view style="height: calc(100vh - 110px)">
+            <view wx:for="{{subscriptionList}}" style="margin-top: 10px">
+              <van-panel title="订阅状态" status="{{item.notified?'已通知 有考位':'暂无考位'}}" desc="{{item.notified?'请删除':''}}" use-footer-slot>
+                <van-cell border="{{false}}" title="地点：{{item.city}} 时间：{{item.date}}"></van-cell>
+                <view slot="footer" style="text-align: right">
+                  <van-button id="{{item.index}}" size="small" plain type="{{item.notified?'danger':'info'}}" bind:click="onSubCancel">删除</van-button>
+                </view>
+              </van-panel>
+            </view>
           </view>
         </van-tab>
         <van-tab title="使用帮助">
-          3
+          <view style="height: calc(100vh - 110px)">
+            <van-collapse value="{{activeHelper}}" accordion bind:change="onHelperCollapseChange">
+              <van-collapse-item title="使用流程" name="0">
+                <text>1. 请确认已在“登录/关于”页面登录，uid 正常显示。
+                  2. 在“考位查询”页面查询想要考试的城市和考试日期，是否有考位。
+                  3. 若没有，在“考位监控”页面的“添加新订阅”里选择想要监控考位释放的城市和日期，点击提交。
+                  4. 在“已订阅”可以查看本账号下的所有订阅。
+                  5. 等待微信推送考位释放的提示。若收到请立即自行登录托福报名系统锁定考位。
+                  6. 已经推送过的订阅会标记为“可删除”，请在已订阅中点击删除。
+                </text>
+              </van-collapse-item>
+              <van-collapse-item title="时效说明" name="1">
+                <text>1. 考位释放的检测只会在我们的数据库更新时进行，更新时间在“考位查询”中进行任意查询会在顶部显示。
+                  2. 目前数据库更新的周期约为5分钟。
+                </text>
+              </van-collapse-item>
+              <van-collapse-item title="易现问题说明" name="2">
+                <text>1. 您不能重复订阅相同的城市和日期组合。
+                  2. 考虑到服务器开销，目前我们抓取托福考位数据的服务器并不稳定，考试日期和考位查询时都可能出现数据为空的情况。请邮件提示管理员进行重启。
+                  3. 如果出现问题，请将截图或文字描述发邮件到 realgeowat@gmail.com，非常感谢。
+                </text>
+              </van-collapse-item>
+            </van-collapse>
+          </view>
         </van-tab>
       </van-tabs>
       <van-popup show="{{showTestDateSelector}}" bind:close="onTestDateSelectorCancel" position="bottom">

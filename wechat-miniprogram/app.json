@@ -25,6 +25,11 @@
     "van-index-anchor": "./vant/index-anchor/index",
     "van-toast": "./vant/toast/index",
     "van-image": "./vant/image/index",
-    "van-picker": "./vant/picker/index"
+    "van-picker": "./vant/picker/index",
+    "van-panel": "./vant/panel/index",
+    "van-collapse": "./vant/collapse/index",
+    "van-collapse-item": "./vant/collapse-item/index",
+    "van-notice-bar": "./vant/notice-bar/index",
+    "van-overlay": "./vant/overlay/index"
   }
 }

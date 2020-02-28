@@ -7,11 +7,10 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
   return await rp({
-    method: 'post',
-    uri: 'http://207.148.92.101:3001/seat',
+    method: 'get',
+    uri: 'http://207.148.92.101:3001/subscription',
     body: {
-      province: event.province,
-      city: event.city
+      index: event.index
     },
     json: true
   }).then((parsedBody) => {

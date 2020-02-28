@@ -11,6 +11,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "ioredis": "^4.14.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "promise-mysql": "^4.1.3"
   }
 }

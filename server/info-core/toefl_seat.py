@@ -21,7 +21,7 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path = firefox)
 
 #%%
-driver.get('https://toefl.neea.edu.cn/')
+driver.get('https://toefl.neea.edu.cn/login')
 time.sleep(300)  # 300 seconds to login
 
 # 获取地址

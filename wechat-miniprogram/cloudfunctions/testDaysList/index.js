@@ -7,7 +7,7 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
   return new Promise((resolve, reject) => {
-    http.get('http://198.13.54.206:3001/testDaysList', (res) => {
+    http.get('http://207.148.92.101:3001/testDaysList', (res) => {
       var rawData = ''
       res.on('data', (d) => {
         rawData += d

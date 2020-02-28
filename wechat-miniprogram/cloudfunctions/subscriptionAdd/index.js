@@ -8,10 +8,12 @@ cloud.init()
 exports.main = async (event, context) => {
   return await rp({
     method: 'post',
-    uri: 'http://207.148.92.101:3001/seat',
+    uri: 'http://207.148.92.101:3001/subscription',
     body: {
+      uid: event.uid,
       province: event.province,
-      city: event.city
+      city: event.city,
+      date: event.date
     },
     json: true
   }).then((parsedBody) => {

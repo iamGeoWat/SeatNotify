@@ -10,6 +10,7 @@ var seatRouter = require('./routes/seat');
 var seatAllRouter = require('./routes/seatAll');
 var lastUpdateTimeRouter = require('./routes/lastUpdateTime');
 var testDaysListRouter = require('./routes/testDaysList');
+var subscriptionRouter = require('./routes/subscription');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/seat', seatRouter);
 app.use('/seatAll', seatAllRouter);
 app.use('/lastUpdateTime', lastUpdateTimeRouter);
 app.use('/testDaysList', testDaysListRouter);
+app.use('/subscription', subscriptionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,6 +5,12 @@ const app = getApp()
 
 Page({
   data: {
+    subscriptionList: [
+      { index: 0, uid: 'sfasfcasd', city: '长沙', date: '2020-03-01', notified: 0, cancelled: 0, hasSeat: 0},
+      { index: 2, uid: 'sfasfcasd', city: '长沙', date: '2020-03-14', notified: 1, cancelled: 0, hasSeat: 1},
+      { index: 3, uid: 'sfasfcasd', city: '长沙', date: '2020-03-19', notified: 0, cancelled: 1, hasSeat: 0},
+      { index: 6, uid: 'sfasfcasd', city: '长沙', date: '2020-03-20', notified: 0, cancelled: 0, hasSeat: 0 }
+    ], // empty in production
     cityList: {
       province_list: {
         110000: '安徽',
@@ -84,6 +90,7 @@ Page({
         360300: '温州',
       }
     },
+    activeHelper: '0',
     selectedTestDate: '',
     showTestDateSelector: false,
     testDaysList: [],
@@ -94,15 +101,37 @@ Page({
     selectedCityInfo: [],
     selectedCity: [{code:'',name:''},{code:'',name:''}],
     showCitySelector: false,
-    activeTab: 1, //change in production
-    loggedIn: true, //change in production
-    confirmEntry: true, //change in production
+    activeTab: 0, //change in production
+    loggedIn: false, //change in production
+    confirmEntry: false, //change in production
     userInfo: {},
     uid: '未登录',
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
+  onHelperCollapseChange (e) {
+    console.log(e)
+    this.setData({
+      activeHelper: e.detail
+    })
+  },
+  onSubTabChange (e) {
+    var that = this
+    console.log(e.detail.index)
+    if (e.detail.index === 0) {
+      that.loadTestDays()
+    } else if (e.detail.index === 1) {
+      that.loadSubscriptionList()
+    }
+  },
+  loadSubscriptionList () {
+    // todo: apply read function here
+  },
+  onSubCancel (e) {
+    console.log(e.target.id)
+    // todo: apply del function here
+  },
   onTestDateSelectorOpen () {
     this.setData({
       showTestDateSelector: true
@@ -128,15 +157,23 @@ Page({
       message: '正在提交...',
       duration: 0
     })
-    // todo: realize this part
+    // todo: realize this part: add function
     wx.cloud.callFunction({
-      name: 'submitCityToSub',
+      name: 'subscriptionAdd',
       data: {
         province: that.data.cityToSub[0].name,
-        city: that.data.cityToSub[1].name
+        city: that.data.cityToSub[1].name,
+        date: that.data.selectedTestDate,
+        uid: that.data.uid
       },
       success: function(res) {
         Toast.clear()
+        var data = JSON.parse(res.result)
+        if (data.status) {
+          Toast.fail('重复订阅')
+        } else if (data.status === 0) {
+          Toast.success('订阅成功')
+        }
       },
       fail: function () {
         Toast.clear()
@@ -248,13 +285,22 @@ Page({
     })
   },
   onTabChange(e) {
-    console.log('tab changed', e.detail)
     var that = this
-    this.setData({
+    console.log('tab changed', e.detail)
+    that.setData({
       activeTab: e.detail
     })
+    if (e.detail === 1 && that.data.loggedIn) {
+      that.loadTestDays()
+    }
   },
   loadTestDays () {
+    var that = this
+    Toast.loading({
+      mask: true,
+      message: '获取考试日期',
+      duration: 0
+    })
     wx.cloud.callFunction({
       name: 'testDaysList',
       success: function (res) {
@@ -269,9 +315,10 @@ Page({
           testDaysList: arr
         })
         console.log(that.data)
-
+        Toast.clear()
       },
       fail: function () {
+        Toast.clear()
         Toast.fail('获取考试日期错误')
         console.error
       }
@@ -296,7 +343,6 @@ Page({
     that.setData({
       loggedIn: true
     })
-    that.loadTestDays()
   },
   bindViewTap: function() {
     wx.navigateTo({

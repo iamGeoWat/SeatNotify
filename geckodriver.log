@@ -43,3 +43,5 @@ Exiting due to channel error.
 1582111890319	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
 1582111892301	Marionette	INFO	Listening on port 62507
 1582111892374	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource:///modules/BrowserUsageTelemetry.jsm, line 304: TypeError: this._timeouts.remove is not a function
+1582543347471	Marionette	INFO	Stopped listening on port 62507
