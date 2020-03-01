@@ -64,7 +64,7 @@
         <van-tab title="已订阅">
           <view style="height: calc(100vh - 110px)">
             <view wx:for="{{subscriptionList}}" style="margin-top: 10px">
-              <van-panel title="订阅状态" status="{{item.notified?'已通知 有考位':'暂无考位'}}" desc="{{item.notified?'请删除':''}}" use-footer-slot>
+              <van-panel wx:if="{{item.cancelled}}" title="订阅状态" status="{{item.notified?'已通知 有考位':'暂无考位'}}" desc="{{item.notified?'请删除':''}}" use-footer-slot>
                 <van-cell border="{{false}}" title="地点：{{item.city}} 时间：{{item.date}}"></van-cell>
                 <view slot="footer" style="text-align: right">
                   <van-button id="{{item.index}}" size="small" plain type="{{item.notified?'danger':'info'}}" bind:click="onSubCancel">删除</van-button>

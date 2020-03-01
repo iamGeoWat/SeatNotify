@@ -11,7 +11,6 @@ exports.main = async (event, context) => {
     uri: 'http://207.148.92.101:3001/subscription',
     body: {
       uid: event.uid,
-      province: event.province,
       city: event.city,
       date: event.date
     },

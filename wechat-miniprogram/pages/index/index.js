@@ -5,12 +5,7 @@ const app = getApp()
 
 Page({
   data: {
-    subscriptionList: [
-      { index: 0, uid: 'sfasfcasd', city: '长沙', date: '2020-03-01', notified: 0, cancelled: 0, hasSeat: 0},
-      { index: 2, uid: 'sfasfcasd', city: '长沙', date: '2020-03-14', notified: 1, cancelled: 0, hasSeat: 1},
-      { index: 3, uid: 'sfasfcasd', city: '长沙', date: '2020-03-19', notified: 0, cancelled: 1, hasSeat: 0},
-      { index: 6, uid: 'sfasfcasd', city: '长沙', date: '2020-03-20', notified: 0, cancelled: 0, hasSeat: 0 }
-    ], // empty in production
+    subscriptionList: [], // empty in production
     cityList: {
       province_list: {
         110000: '安徽',
@@ -127,10 +122,77 @@ Page({
   },
   loadSubscriptionList () {
     // todo: apply read function here
+    var that = this
+    Toast.loading({
+      mask: true,
+      message: '加载中...',
+      duration: 5
+    })
+    wx.cloud.callFunction({
+      name: 'subscriptionGet',
+      data: {
+        uid: that.data.uid
+      },
+      success: function (res) {
+        Toast.clear()
+        try {
+          var data = JSON.parse(res.result)
+        } catch (e) {
+          Toast.clear()
+          Toast.fail('网络错误')
+          console.error
+        }
+        if (data.status) {
+          Toast.fail('加载失败')
+        }
+        that.setData({
+          subscriptionList: data
+        })
+      },
+      fail: function () {
+        Toast.clear()
+        Toast.fail('网络错误')
+        console.error
+      }
+    })
   },
   onSubCancel (e) {
     console.log(e.target.id)
     // todo: apply del function here
+    var that = this
+    console.log(this.data.cityToSub)
+    Toast.loading({
+      mask: true,
+      message: '正在删除...',
+      duration: 5
+    })
+    wx.cloud.callFunction({
+      name: 'subscriptionDel',
+      data: {
+        sub_id: e.target.id,
+        uid: that.data.uid
+      },
+      success: function (res) {
+        Toast.clear()
+        try {
+          var data = JSON.parse(res.result)
+        } catch (e) {
+          Toast.clear()
+          Toast.fail('网络错误')
+          console.error
+        }
+        if (data.status) {
+          Toast.fail('删除失败')
+        } else if (data.status === 0) {
+          Toast.success('删除成功')
+        }
+      },
+      fail: function () {
+        Toast.clear()
+        Toast.fail('网络错误')
+        console.error
+      }
+    })
   },
   onTestDateSelectorOpen () {
     this.setData({
@@ -155,20 +217,25 @@ Page({
     Toast.loading({
       mask: true,
       message: '正在提交...',
-      duration: 0
+      duration: 5
     })
-    // todo: realize this part: add function
+    // todo: realize this part: add ADD function
     wx.cloud.callFunction({
       name: 'subscriptionAdd',
       data: {
-        province: that.data.cityToSub[0].name,
         city: that.data.cityToSub[1].name,
         date: that.data.selectedTestDate,
         uid: that.data.uid
       },
       success: function(res) {
         Toast.clear()
-        var data = JSON.parse(res.result)
+        try {
+          var data = JSON.parse(res.result)
+        } catch (e) {
+          Toast.clear()
+          Toast.fail('网络错误')
+          console.error
+        }
         if (data.status) {
           Toast.fail('重复订阅')
         } else if (data.status === 0) {
@@ -181,7 +248,6 @@ Page({
         console.error
       }
     })
-    Toast.clear()
   },
   onCityToSubConfirm(e) {
     this.setData({

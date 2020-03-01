@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
     method: 'get',
     uri: 'http://207.148.92.101:3001/subscription',
     body: {
-      index: event.index
+      uid: event.uid
     },
     json: true
   }).then((parsedBody) => {
