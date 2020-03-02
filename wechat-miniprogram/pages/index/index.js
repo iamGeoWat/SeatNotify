@@ -114,9 +114,7 @@ Page({
   onSubTabChange (e) {
     var that = this
     console.log(e.detail.index)
-    if (e.detail.index === 0) {
-      that.loadTestDays()
-    } else if (e.detail.index === 1) {
+    if (e.detail.index === 1) {
       that.loadSubscriptionList()
     }
   },
@@ -134,20 +132,12 @@ Page({
         uid: that.data.uid
       },
       success: function (res) {
+        console.log(res.result)
         Toast.clear()
-        try {
-          var data = JSON.parse(res.result)
-        } catch (e) {
-          Toast.clear()
-          Toast.fail('网络错误')
-          console.error
-        }
-        if (data.status) {
-          Toast.fail('加载失败')
-        }
         that.setData({
-          subscriptionList: data
+          subscriptionList: res.result
         })
+        console.log(that.data.subscriptionList)
       },
       fail: function () {
         Toast.clear()
@@ -157,10 +147,9 @@ Page({
     })
   },
   onSubCancel (e) {
-    console.log(e.target.id)
+    console.log(e)
     // todo: apply del function here
     var that = this
-    console.log(this.data.cityToSub)
     Toast.loading({
       mask: true,
       message: '正在删除...',
@@ -173,18 +162,18 @@ Page({
         uid: that.data.uid
       },
       success: function (res) {
+        console.log(res.result)
         Toast.clear()
-        try {
-          var data = JSON.parse(res.result)
-        } catch (e) {
-          Toast.clear()
+        if (res.result === {}) {
           Toast.fail('网络错误')
           console.error
-        }
-        if (data.status) {
-          Toast.fail('删除失败')
-        } else if (data.status === 0) {
-          Toast.success('删除成功')
+        } else {
+          if (res.result.status) {
+            Toast.fail('删除失败')
+          } else if (res.result.status === 0) {
+            Toast.success('删除成功')
+            that.loadSubscriptionList()
+          }
         }
       },
       fail: function () {
@@ -195,9 +184,14 @@ Page({
     })
   },
   onTestDateSelectorOpen () {
-    this.setData({
-      showTestDateSelector: true
-    })
+    var that = this
+    if (that.data.testDaysList.length === 0) {
+      that.loadTestDays()
+    } else {
+      that.setData({
+        showTestDateSelector: true
+      })
+    }
   },
   onTestDateSelectorConfirm (e) {
     console.log(e)
@@ -228,18 +222,17 @@ Page({
         uid: that.data.uid
       },
       success: function(res) {
+        console.log(res.result)
         Toast.clear()
-        try {
-          var data = JSON.parse(res.result)
-        } catch (e) {
-          Toast.clear()
+        if (res.result === {}) {
           Toast.fail('网络错误')
           console.error
-        }
-        if (data.status) {
-          Toast.fail('重复订阅')
-        } else if (data.status === 0) {
-          Toast.success('订阅成功')
+        } else {
+          if (res.result.status) {
+            Toast.fail('重复订阅')
+          } else if (res.result.status === 0) {
+            Toast.success('订阅成功')
+          }
         }
       },
       fail: function () {
@@ -356,9 +349,6 @@ Page({
     that.setData({
       activeTab: e.detail
     })
-    if (e.detail === 1 && that.data.loggedIn) {
-      that.loadTestDays()
-    }
   },
   loadTestDays () {
     var that = this
@@ -397,15 +387,26 @@ Page({
     })
     console.log(that.data.userInfo)
     app.globalData.userInfo = e.detail.userInfo
-    wx.login({
+    wx.cloud.callFunction({
+      name: 'login',
       success: function (res) {
-        console.log(res)
+        console.log(res.result)
+        console.log(res.result.openid)
         that.setData({
-          uid: res.code
+          uid: res.result.openid
         })
         app.globalData.uid = res.code
       }
     })
+    // wx.login({
+    //   success: function (res) {
+    //     console.log(res)
+    //     that.setData({
+    //       uid: res.code
+    //     })
+    //     app.globalData.uid = res.code
+    //   }
+    // })
     that.setData({
       loggedIn: true
     })

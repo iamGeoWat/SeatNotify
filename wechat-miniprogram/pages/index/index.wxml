@@ -53,7 +53,7 @@
                 <van-button slot="button" size="small" type="info" bind:click="onCitySelectorOpen">选择城市</van-button>
               </van-field>
               <van-field disabled value="{{selectedTestDate}}" center clearable label="考试日期" placeholder="请选择" border="{{false}}" use-button-slot>
-                <van-button slot="button" size="small" type="info" bind:click="onTestDateSelectorOpen">选择日期</van-button>
+                <van-button slot="button" size="small" type="{{testDaysList.length===0?'default':'info'}}" bind:click="onTestDateSelectorOpen">{{testDaysList.length===0?'获取日期':'选择日期'}}</van-button>
               </van-field>
               <van-cell>
                 <van-button disabled="{{!(cityToSub[0].name && selectedTestDate)}}" bind:click="onSubmitCityToSub">提交</van-button>
@@ -64,10 +64,10 @@
         <van-tab title="已订阅">
           <view style="height: calc(100vh - 110px)">
             <view wx:for="{{subscriptionList}}" style="margin-top: 10px">
-              <van-panel wx:if="{{item.cancelled}}" title="订阅状态" status="{{item.notified?'已通知 有考位':'暂无考位'}}" desc="{{item.notified?'请删除':''}}" use-footer-slot>
+              <van-panel wx:if="{{!item.cancelled}}" title="订阅状态" status="{{item.notified?'已通知 有考位':'暂无考位'}}" desc="{{item.notified?'请删除':''}}" use-footer-slot>
                 <van-cell border="{{false}}" title="地点：{{item.city}} 时间：{{item.date}}"></van-cell>
                 <view slot="footer" style="text-align: right">
-                  <van-button id="{{item.index}}" size="small" plain type="{{item.notified?'danger':'info'}}" bind:click="onSubCancel">删除</van-button>
+                  <van-button id="{{item.sub_id}}" size="small" plain type="{{item.notified?'danger':'info'}}" bind:click="onSubCancel">删除</van-button>
                 </view>
               </van-panel>
             </view>
