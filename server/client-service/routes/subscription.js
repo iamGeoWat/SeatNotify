@@ -17,7 +17,18 @@ router.post('/', async (req, res, next) => {
     await subscriptionDao.add(req.body.uid, req.body.city, req.body.date, 0, 0, 0)
     res.send({status: 0, msg: 'success'})
   } else {
-    res.send({status: 1, msg: 'duplicated'})
+    let isDup = false
+    for (let i = 0; i < checkDupResult.length; i++ ) {
+      if (checkDupResult[i].cancelled === 0) {
+        isDup = true
+        res.send({status: 1, msg: 'duplicated'})
+        break;
+      }
+    }
+    if (!isDup) {
+      await subscriptionDao.add(req.body.uid, req.body.city, req.body.date, 0, 0, 0)
+      res.send({status: 0, msg: 'success'})
+    }
   }
 });
 

@@ -5,6 +5,7 @@ const app = getApp()
 
 Page({
   data: {
+    tmplId: 'hBg0YVqqixtUZH-f776yLuJ0EbB9Vl6bFilyb4Q8B8w',
     subscriptionList: [], // empty in production
     cityList: {
       province_list: {
@@ -208,37 +209,47 @@ Page({
   onSubmitCityToSub () {
     var that = this
     console.log(this.data.cityToSub)
-    Toast.loading({
-      mask: true,
-      message: '正在提交...',
-      duration: 5
-    })
-    // todo: realize this part: add ADD function
-    wx.cloud.callFunction({
-      name: 'subscriptionAdd',
-      data: {
-        city: that.data.cityToSub[1].name,
-        date: that.data.selectedTestDate,
-        uid: that.data.uid
-      },
-      success: function(res) {
-        console.log(res.result)
-        Toast.clear()
-        if (res.result === {}) {
-          Toast.fail('网络错误')
-          console.error
-        } else {
-          if (res.result.status) {
-            Toast.fail('重复订阅')
-          } else if (res.result.status === 0) {
-            Toast.success('订阅成功')
-          }
+    wx.requestSubscribeMessage({
+      tmplIds: [that.data.tmplId],
+      success: function (res) {
+        console.log(res[that.data.tmplId])
+        if (res[that.data.tmplId] === 'reject') {
+          Toast.fail('请允许通知')
+        } else if (res[that.data.tmplId] === 'accept') {
+          Toast.loading({
+            mask: true,
+            message: '正在提交...',
+            duration: 5
+          })
+          // todo: realize this part: add ADD function
+          wx.cloud.callFunction({
+            name: 'subscriptionAdd',
+            data: {
+              city: that.data.cityToSub[1].name,
+              date: that.data.selectedTestDate,
+              uid: that.data.uid
+            },
+            success: function (res) {
+              console.log(res.result)
+              Toast.clear()
+              if (res.result === {}) {
+                Toast.fail('网络错误')
+                console.error
+              } else {
+                if (res.result.status) {
+                  Toast.fail('重复订阅')
+                } else if (res.result.status === 0) {
+                  Toast.success('订阅成功')
+                }
+              }
+            },
+            fail: function () {
+              Toast.clear()
+              Toast.fail('网络错误')
+              console.error
+            }
+          })
         }
-      },
-      fail: function () {
-        Toast.clear()
-        Toast.fail('网络错误')
-        console.error
       }
     })
   },

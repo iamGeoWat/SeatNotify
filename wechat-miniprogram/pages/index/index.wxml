@@ -41,7 +41,7 @@
     <view wx:if="{{activeTab === 1}}">
       <view wx:if="{{!loggedIn}}">
         <van-overlay show="{{true}}">
-          <view style="display: flex; align-items: center; justify-content: center; height: 100%; color: white">请在右下 登录/关于 点击登录以使用此功能 注：服务器端功能未完成，此页面仅预览使用。</view>
+          <view style="display: flex; align-items: center; justify-content: center; height: 100%; color: white">请在右下 登录/关于 点击登录以使用此功能</view>
           <!-- change text in production -->
         </van-overlay>
       </view>
@@ -117,7 +117,7 @@
       <van-cell-group title="关于">
         <van-cell title="uid" label="用户唯一识别码">{{uid}}</van-cell>
         <van-cell border="{{false}}">出现 bug 请联系 realgeowat@gmail.com</van-cell>
-        <van-cell border="{{false}}">欢迎订阅公众号“教英语的”</van-cell>
+        <van-cell border="{{false}}">欢迎关注知乎号“Zee”持续更新T/G/雅思学习文章</van-cell>
         <van-cell border="{{false}}">
           <view>服务器也有开销，欢迎您支持我们的运营
             <view style="margin-top: 15px">
