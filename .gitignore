@@ -7,3 +7,5 @@ wechat-miniprogram/vant/
 wechat-miniprogram/cloudfunctions/seatInfoByCity/node_modules
 server/client-service/node_modules
 server/redis/redis-5.0.7
+server/client-service/notification-engine/test.js
+server/client-service/notification-engine/test1.js

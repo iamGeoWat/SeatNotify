@@ -9,6 +9,8 @@
 --------------------------------------------------
 """
 
+import random
+
 import time
 from selenium import webdriver
 import pandas as pd
@@ -34,7 +36,7 @@ for i in range(len(citiesJSON)):
 		citiesList.append(city['cityNameEn'])
 
 
-#continuously fetch data
+#continuously fetching data
 
 while True:
 	# 获取考试日期
@@ -62,7 +64,8 @@ while True:
 					df['date'] = date
 					storage = pd.concat([storage, df], ignore_index=True)
 					print(storage)
-				time.sleep(3)
+				sleep_time = round(random.uniform(1, 3), 1)
+				time.sleep(sleep_time)
 			except Exception as e:
 				print(str(e))
 				break
@@ -72,4 +75,5 @@ while True:
 	Redis.set('days_list', str(daysList[0:9]))
 	update_timestamp = time.time()
 	Redis.set('update_timestamp', int(update_timestamp))
+	Redis.publish('update_timestamp', int(update_timestamp))
 	time.sleep(10)

@@ -374,8 +374,10 @@ Page({
         console.log(res.result)
         var str = res.result.substring(res.result.indexOf('[') + 1, res.result.lastIndexOf(']'))
         console.log(str)
-        var reg = new RegExp("'", "g")
-        var str = str.replace(reg, "")
+        var reg1 = new RegExp("'", "g")
+        var str = str.replace(reg1, "")
+        var reg2 = new RegExp(" ", "g")
+        var str = str.replace(reg2, "")
         var arr = str.split(',')
         console.log(arr)
         that.setData({

@@ -68,4 +68,56 @@ module.exports = class SubscriptionDao {
       await conn.destroy()
     }
   }
+  async queryHotSubs () {
+    let conn = await dbConn();
+    try {
+      let result = await conn.query(queryString.queryHotSubs);
+      return result
+    } catch (e) {
+      console.log(e);
+      throw e
+    } finally {
+      await conn.release();
+      await conn.destroy()
+    }
+  }
+  async modHasSeatBySubId (status, sub_id) {
+    let conn = await dbConn()
+    try {
+      await conn.query(queryString.modHasSeatBySubId, [status, sub_id])
+      return true
+    } catch (e) {
+      console.log(e)
+      throw e
+    } finally {
+      await conn.release()
+      await conn.destroy()
+    }
+  }
+  async modHasSeatByUidCityDate (status, uid, city, date) {
+    let conn = await dbConn()
+    try {
+      await conn.query(queryString.modHasSeatByUidCityDate, [status, uid, city, date])
+      return true
+    } catch (e) {
+      console.log(e)
+      throw e
+    } finally {
+      await conn.release()
+      await conn.destroy()
+    }
+  }
+  async modNotifiedByUidCityDate (status, uid, city, date) {
+    let conn = await dbConn()
+    try {
+      await conn.query(queryString.modNotifiedByUidCityDate, [status, uid, city, date])
+      return true
+    } catch (e) {
+      console.log(e)
+      throw e
+    } finally {
+      await conn.release()
+      await conn.destroy()
+    }
+  }
 };
