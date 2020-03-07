@@ -76,4 +76,4 @@ while True:
 	update_timestamp = time.time()
 	Redis.set('update_timestamp', int(update_timestamp))
 	Redis.publish('update_timestamp', int(update_timestamp))
-	time.sleep(10)
+	time.sleep(60)
