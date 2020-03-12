@@ -21,7 +21,7 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path=firefox)
 
 driver.get('https://ielts.neea.edu.cn/login')
-time.sleep(60)  # 60 seconds to login
+time.sleep(120)  # 60 seconds to login
 
 # 获取地址
 monthsJSON = driver.execute_script('return $.getJSON("./querySeat?productId=IELTSPBT")')
