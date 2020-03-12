@@ -40,6 +40,7 @@ provincesList = ['11', '12', '13', '14', '15', '21', '22', '23', '31', '32', '33
 while True:
     # 获取考试日期
     storage = pd.DataFrame()
+    daysList = set()
     for province in provincesList:
         for month in monthsList:
             js = 'return $.getJSON("./queryTestSeats",{queryMonths: "%s", queryProvinces: "%s", productId: "%s"});' % (month, province, 'IELTSPBT')
@@ -58,7 +59,7 @@ while True:
                 for preciseTime, dataDetail in dataJSON.items():
                     df = pd.DataFrame(dataDetail)
                     df = df.drop(['actionType', 'adminDateCn', 'adminDateEn', 'adminGuid', 'adminId', 'adminProvince',
-                                  'centerGuid', 'cityCode', 'levelCode', 'optStatus', 'optStatusCn', 'optStatusEn',
+                                  'centerGuid', 'cityCode', 'optStatus', 'optStatusCn', 'optStatusEn',
                                   'provinceCode', 'registerBeginTime', 'registerEndTimeDesc',
                                   'registerEndTimeDescCn', 'registerEndTimeDescEn', 'seatGuid', 'seatStatusCn',
                                   'seatStatusEn', 'srTime', 'testCode', 'transType'], axis=1)
@@ -79,9 +80,10 @@ while True:
                             df.at[index, 'seatStatus'] = 2
                         elif row['seatStatus'] == 0:
                             df.at[index, 'seatStatus'] = 3
-                        print(row['adminDate'])
                         df.at[index, 'testTime'] = datetime.fromtimestamp(row['adminDate'] / 1000 + 28800).strftime('%H:%M')
-                        df.at[index, 'date'] = datetime.fromtimestamp(row['adminDate'] / 1000 + 28800).strftime('%Y-%m-%d')
+                        date = datetime.fromtimestamp(row['adminDate'] / 1000 + 28800).strftime('%Y-%m-%d')
+                        df.at[index, 'date'] = date
+                        daysList.add(date)
                     df = df.drop(['adminDate'], axis=1)
                     df['seatBookStatus'] = df['seatStatus']
                     storage = pd.concat([storage, df], ignore_index=True)
@@ -94,7 +96,7 @@ while True:
     # storage go to redis
     print(storage)
     Redis.set('ielts_seat', str(storage.to_dict('records')))
-    Redis.set('ielts_days_list', str(monthsList))
+    Redis.set('ielts_days_list', str(daysList))
     update_timestamp = time.time()
     Redis.set('ielts_update_timestamp', int(update_timestamp))
     Redis.publish('ielts_update_timestamp', int(update_timestamp))

@@ -1,13 +1,13 @@
-console.log('notification service started.');
+console.log('ielts notification service started.');
 const axios = require('axios');
 let Redis = require('ioredis');
 let subRedis = new Redis();
 let actRedis = new Redis();
-const SubscriptionDao = require('../dao/SubscriptionDao');
+const SubscriptionDao = require('../dao/IeltsSubscriptionDao');
 const subscriptionDao = new SubscriptionDao();
 const wxConf = require('../config/wxConfig');
 
-subRedis.subscribe("update_timestamp", (err, count) => {
+subRedis.subscribe("ielts_update_timestamp", (err, count) => {
   console.log("err:", err);
   console.log("count:", count);
   subRedis.on("message", async (channel, message) => {
@@ -16,7 +16,7 @@ subRedis.subscribe("update_timestamp", (err, count) => {
     if (message === '') {
       console.log('info core test days loading error.')
     } else {
-      actRedis.get('seat').then(async (records) => {
+      actRedis.get('ielts_seat').then(async (records) => {
         //--------- prepare subscribe data in DB --------- OUTPUT: { city@date: itsSubscribers }
         let hotSubs = await subscriptionDao.queryHotSubs();
         if (hotSubs.length === 0) {
@@ -37,7 +37,7 @@ subRedis.subscribe("update_timestamp", (err, count) => {
           }
           console.log(subscribedCityAtDate);
           console.log(cityAtDateAndItsSubscribers);
-  
+          
           //---------- prepare seat status data in REDIS ------- OUTPUT: { city@date: how-many-seats-left }
           let parsedRecords = eval(records);
           let cityAtDateAndSeatNum = {}; //seat num is the num of test centers that have seats
@@ -52,7 +52,7 @@ subRedis.subscribe("update_timestamp", (err, count) => {
             }
           }
           console.log(cityAtDateAndSeatNum);
-  
+          
           //check every city@date from cityAtDateAndItsSubscribers in cityAtDateAndSeatNum, if not 0, mod db::has_seat, do notify, mod db::notified.
           for (let cityAtDate of subscribedCityAtDate) {
             console.log(cityAtDate);
@@ -73,11 +73,11 @@ subRedis.subscribe("update_timestamp", (err, count) => {
                     touser: uid,
                     template_id: wxConf.template_id,
                     data: {
-                      "thing1": {"value": "托福考位释放"},
+                      "thing1": {"value": "雅思考位释放"},
                       "thing3": {"value": splitCityAndDate[0]},
                       "date5": {"value": splitCityAndDate[1]},
                       "name4": {"value": "看看考位助手"},
-                      "thing6": {"value": "考位已释放，请前往中国托福官网报名"}
+                      "thing6": {"value": "考位已释放，请前往中国雅思官网报名"}
                     }
                   }).then(async (msg) => {
                     console.log(msg.data);

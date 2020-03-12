@@ -94,7 +94,7 @@ Page({
       },
       fail: function () {
         Toast.clear()
-        Toast.fail('网络错误')
+        Toast.fail('网络错误，请重试一下哦')
         console.error
       }
     })
@@ -118,7 +118,7 @@ Page({
         console.log(res.result)
         Toast.clear()
         if (res.result === {}) {
-          Toast.fail('网络错误')
+          Toast.fail('网络错误，请重试一下哦')
           console.error
         } else {
           if (res.result.status) {
@@ -131,7 +131,7 @@ Page({
       },
       fail: function () {
         Toast.clear()
-        Toast.fail('网络错误')
+        Toast.fail('网络错误，请重试一下哦')
         console.error
       }
     })
@@ -185,7 +185,7 @@ Page({
               console.log(res.result)
               Toast.clear()
               if (res.result === {}) {
-                Toast.fail('网络错误')
+                Toast.fail('网络错误，请重试一下哦')
                 console.error
               } else {
                 if (res.result.status) {
@@ -197,7 +197,7 @@ Page({
             },
             fail: function () {
               Toast.clear()
-              Toast.fail('网络错误')
+              Toast.fail('网络错误，请重试一下哦')
               console.error
             }
           })
@@ -238,9 +238,10 @@ Page({
         province: city[0].name
       },
       success: function (res) {
+        console.log('2')
         Toast.clear()
         if (res.result.length === 0) {
-          Toast.fail('网络错误')
+          Toast.fail('网络错误，请重试一下哦')
         }
         console.log(res.result)
         that.setData({
@@ -257,8 +258,9 @@ Page({
         }
       },
       fail: function () {
+        console.log('1')
         Toast.clear()
-        Toast.fail('网络错误')
+        Toast.fail('网络错误，请重试一下哦')
         console.error
       }
     })

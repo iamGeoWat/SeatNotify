@@ -18,10 +18,10 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for subscription
+-- Table structure for ielts_subscription
 -- ----------------------------
-DROP TABLE IF EXISTS `subscription`;
-CREATE TABLE `subscription` (
+DROP TABLE IF EXISTS `ielts_subscription`;
+CREATE TABLE `ielts_subscription` (
   `sub_id` int(5) unsigned NOT NULL AUTO_INCREMENT,
   `uid` varchar(100) NOT NULL,
   `city` varchar(10) NOT NULL,
