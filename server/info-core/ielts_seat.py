@@ -59,7 +59,7 @@ while True:
                     df = pd.DataFrame(dataDetail)
                     df = df.drop(['actionType', 'adminDateCn', 'adminDateEn', 'adminGuid', 'adminId', 'adminProvince',
                                   'centerGuid', 'cityCode', 'levelCode', 'optStatus', 'optStatusCn', 'optStatusEn',
-                                  'productId', 'provinceCode', 'registerBeginTime', 'registerEndTimeDesc',
+                                  'provinceCode', 'registerBeginTime', 'registerEndTimeDesc',
                                   'registerEndTimeDescCn', 'registerEndTimeDescEn', 'seatGuid', 'seatStatusCn',
                                   'seatStatusEn', 'srTime', 'testCode', 'transType'], axis=1)
                     df.rename(
