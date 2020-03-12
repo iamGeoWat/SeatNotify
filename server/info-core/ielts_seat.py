@@ -90,7 +90,7 @@ while True:
                     df = df.drop(['adminDate'], axis=1)
                     df['seatBookStatus'] = df['seatStatus']
                     storage = pd.concat([storage, df], ignore_index=True)
-                    # print(storage)
+                    print(storage)
                 sleep_time = round(random.uniform(1, 2), 1)
                 time.sleep(sleep_time)
             except Exception as e:
