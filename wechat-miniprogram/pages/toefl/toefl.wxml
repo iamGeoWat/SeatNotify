@@ -87,8 +87,7 @@
               </text>
             </van-collapse-item>
             <van-collapse-item title="FAQ" name="3">
-              <text>FAQ：
-                Q1：时效性如何？
+              <text>Q1：时效性如何？
                 A1：所有考位信息来自于服务器时刻向托福官网发送请求，目前为了稳定保证，全国的考场信息大约5-10分钟更新一次。
 
                 Q2：考位释放的通知，及时吗？
