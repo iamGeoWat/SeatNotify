@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-------- data fetching method developed by: -------
+------- data fetching method by: -------
 @Author    Michael Wang
 @Website   michany.xyz
 ----------- optimized and modified by: ------------
@@ -18,11 +18,9 @@ import pandas as pd
 import redis
 Redis = redis.StrictRedis('127.0.0.1', 6379)
 
-#%%
 firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path = firefox)
 
-#%%
 driver.get('https://toefl.neea.edu.cn/login')
 time.sleep(300)  # 300 seconds to login
 
@@ -64,16 +62,15 @@ while True:
 					df['date'] = date
 					storage = pd.concat([storage, df], ignore_index=True)
 					print(storage)
-				sleep_time = round(random.uniform(1, 3), 1)
+				sleep_time = round(random.uniform(1, 2), 1)
 				time.sleep(sleep_time)
 			except Exception as e:
 				print(str(e))
 				break
 	# storage go to redis
 	Redis.set('seat', str(storage.to_dict('records')))
-
 	Redis.set('days_list', str(daysList[0:9]))
 	update_timestamp = time.time()
 	Redis.set('update_timestamp', int(update_timestamp))
 	Redis.publish('update_timestamp', int(update_timestamp))
-	time.sleep(60)
+	time.sleep(30)
