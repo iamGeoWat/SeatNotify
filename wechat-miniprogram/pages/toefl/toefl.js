@@ -1,4 +1,4 @@
-//index.js
+//toefl.js
 //获取应用实例
 import Toast from '../../vant/toast/toast.js'
 const app = getApp()
@@ -95,7 +95,7 @@ Page({
     activeDisplayType: 0,
     cityInfoToShow: [],
     selectedCityInfo: [],
-    selectedCity: [{code:'',name:''},{code:'',name:''}],
+    selectedCity: [{ code: '', name: '' }, { code: '', name: '' }],
     showCitySelector: false,
     activeTab: 0, //change in production
     loggedIn: false, //change in production
@@ -105,20 +105,20 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
-  onHelperCollapseChange (e) {
+  onHelperCollapseChange(e) {
     console.log(e)
     this.setData({
       activeHelper: e.detail
     })
   },
-  onSubTabChange (e) {
+  onSubTabChange(e) {
     var that = this
     console.log(e.detail.index)
     if (e.detail.index === 1) {
       that.loadSubscriptionList()
     }
   },
-  loadSubscriptionList () {
+  loadSubscriptionList() {
     // todo: apply read function here
     var that = this
     Toast.loading({
@@ -146,7 +146,7 @@ Page({
       }
     })
   },
-  onSubCancel (e) {
+  onSubCancel(e) {
     console.log(e)
     // todo: apply del function here
     var that = this
@@ -183,7 +183,7 @@ Page({
       }
     })
   },
-  onTestDateSelectorOpen () {
+  onTestDateSelectorOpen() {
     var that = this
     if (that.data.testDaysList.length === 0) {
       that.loadTestDays()
@@ -193,19 +193,19 @@ Page({
       })
     }
   },
-  onTestDateSelectorConfirm (e) {
+  onTestDateSelectorConfirm(e) {
     console.log(e)
     this.setData({
       selectedTestDate: e.detail.value,
       showTestDateSelector: false
     })
   },
-  onTestDateSelectorCancel () {
+  onTestDateSelectorCancel() {
     this.setData({
       showTestDateSelector: false
     })
   },
-  onSubmitCityToSub () {
+  onSubmitCityToSub() {
     var that = this
     console.log(this.data.cityToSub)
     wx.requestSubscribeMessage({
@@ -304,7 +304,7 @@ Page({
           })
         }
       },
-      fail: function() {
+      fail: function () {
         Toast.clear()
         Toast.fail('网络错误')
         console.error
@@ -315,7 +315,7 @@ Page({
       name: 'lastUpdateTime',
       success: function (res) {
         console.log(res.result)
-        var date = new Date(parseInt(res.result)*1000)
+        var date = new Date(parseInt(res.result) * 1000)
         var timeString = date.toLocaleString()
         console.log(timeString)
         that.setData({
@@ -365,7 +365,7 @@ Page({
       activeTab: e.detail
     })
   },
-  loadTestDays () {
+  loadTestDays() {
     var that = this
     Toast.loading({
       mask: true,
@@ -428,7 +428,7 @@ Page({
       loggedIn: true
     })
   },
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
@@ -439,7 +439,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -461,7 +461,7 @@ Page({
       })
     }
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({

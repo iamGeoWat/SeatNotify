@@ -95,7 +95,7 @@ while True:
     # storage go to redis
     print(storage)
     Redis.set('ielts_seat', str(storage.to_dict('records')))
-    Redis.set('ielts_months_list', str(monthsList))
+    Redis.set('ielts_days_list', str(monthsList))
     update_timestamp = time.time()
     Redis.set('ielts_update_timestamp', int(update_timestamp))
     Redis.publish('ielts_update_timestamp', int(update_timestamp))
