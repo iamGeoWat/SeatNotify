@@ -80,7 +80,7 @@ Page({
       duration: 5
     })
     wx.cloud.callFunction({
-      name: 'subscriptionGet',
+      name: 'ieltsSubscriptionGet',
       data: {
         uid: that.data.uid
       },
@@ -109,7 +109,7 @@ Page({
       duration: 5
     })
     wx.cloud.callFunction({
-      name: 'subscriptionDel',
+      name: 'ieltsSubscriptionDel',
       data: {
         sub_id: e.target.id,
         uid: that.data.uid
@@ -175,9 +175,9 @@ Page({
           })
           // todo: realize this part: add ADD function
           wx.cloud.callFunction({
-            name: 'subscriptionAdd',
+            name: 'ieltsSubscriptionAdd',
             data: {
-              city: that.data.cityToSub[1].name,
+              city: that.data.cityToSub[0].name,
               date: that.data.selectedTestDate,
               uid: that.data.uid
             },
@@ -327,10 +327,10 @@ Page({
       duration: 0
     })
     wx.cloud.callFunction({
-      name: 'testDaysList',
+      name: 'ieltsTestDaysList',
       success: function (res) {
         console.log(res.result)
-        var str = res.result.substring(res.result.indexOf('[') + 1, res.result.lastIndexOf(']'))
+        var str = res.result.substring(res.result.indexOf('{') + 1, res.result.lastIndexOf('}'))
         console.log(str)
         var reg1 = new RegExp("'", "g")
         var str = str.replace(reg1, "")
@@ -338,6 +338,7 @@ Page({
         var str = str.replace(reg2, "")
         var arr = str.split(',')
         console.log(arr)
+        arr = arr.sort(function (b, a) { return Date.parse(b.replace(/-/g, "/")) - Date.parse(a.replace(/-/g, "/")) })
         that.setData({
           testDaysList: arr
         })
@@ -346,7 +347,7 @@ Page({
       },
       fail: function () {
         Toast.clear()
-        Toast.fail('获取考试日期错误')
+        Toast.fail('网络错误，请重试一下哦')
         console.error
       }
     })

@@ -392,7 +392,7 @@ Page({
       },
       fail: function () {
         Toast.clear()
-        Toast.fail('获取考试日期错误')
+        Toast.fail('网络错误，请重试一下哦')
         console.error
       }
     })

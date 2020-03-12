@@ -17,6 +17,7 @@ subRedis.subscribe("ielts_update_timestamp", (err, count) => {
       console.log('info core test days loading error.')
     } else {
       actRedis.get('ielts_seat').then(async (records) => {
+        records = records.replace(/None,/g, '\'N\',') //fix None is not defined problem
         //--------- prepare subscribe data in DB --------- OUTPUT: { city@date: itsSubscribers }
         let hotSubs = await subscriptionDao.queryHotSubs();
         if (hotSubs.length === 0) {
