@@ -71,6 +71,12 @@ while True:
                     df['testTime'] = ''
                     df['date'] = ''
                     for index, row in df.iterrows():
+                        if row['testFee'] is None:
+                            df.at[index, 'testFee'] = 'None'
+                        if row['testFee'] is None:
+                            df.at[index, 'lateRegFlag'] = 'None'
+                        if row['testFee'] is None:
+                            df.at[index, 'lateReg'] = 'None'
                         if row['seatStatus'] == 1:
                             df.at[index, 'seatStatus'] = 1
                         elif row['seatStatus'] == 2:
