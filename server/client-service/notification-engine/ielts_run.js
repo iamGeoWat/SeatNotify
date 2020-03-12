@@ -46,10 +46,10 @@ subRedis.subscribe("ielts_update_timestamp", (err, count) => {
             cityAtDateAndSeatNum[cityAtDate] = 0
           }
           for (let record of parsedRecords) {
-            if (subscribedCityAtDate.has(record['cityCn']+'@'+record['date'])) {
-              console.log(record)
+            console.log(record)
+            if (subscribedCityAtDate.has(record['provinceCn']+'@'+record['date'])) {
               if (record['seatStatus'] === 1) {
-                cityAtDateAndSeatNum[record['cityCn']+'@'+record['date']] += record['seatStatus']
+                cityAtDateAndSeatNum[record['provinceCn']+'@'+record['date']] += record['seatStatus']
               } // prevent status code that is not 0 and 1
             }
           }
