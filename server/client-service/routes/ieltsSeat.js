@@ -7,7 +7,6 @@ var redis = new Redis();
 router.post('/', function(req, res, next) {
   console.log(req.body.province)
   redis.get('ielts_seat').then(async function (rawData) {
-    rawData = rawData.replace(/None,/g, '\'N\',')
     var infoList = eval(rawData);
     var matchedList = []
     for (var i in infoList) {

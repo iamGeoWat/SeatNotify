@@ -71,12 +71,12 @@ while True:
                     df['testTime'] = ''
                     df['date'] = ''
                     for index, row in df.iterrows():
-                        # if row['testFee'] is None:
-                        #     df.at[index, 'testFee'] = 'None'
-                        # if row['testFee'] is None:
-                        #     df.at[index, 'lateRegFlag'] = 'None'
-                        # if row['testFee'] is None:
-                        #     df.at[index, 'lateReg'] = 'None'
+                        if row['testFee'] is None:
+                            df.at[index, 'testFee'] = 'N'
+                        if row['lateRegFlag'] is None:
+                            df.at[index, 'lateRegFlag'] = 'N'
+                        if row['lateReg'] is None:
+                            df.at[index, 'lateReg'] = 'N'
                         if row['seatStatus'] == 1:
                             df.at[index, 'seatStatus'] = 1
                         elif row['seatStatus'] == 2:
@@ -85,8 +85,6 @@ while True:
                             df.at[index, 'seatStatus'] = 2
                         elif row['seatStatus'] == 0:
                             df.at[index, 'seatStatus'] = 3
-                        else:
-                            df.at[index, 'seatStatus'] = row['seatStatus']
                         df.at[index, 'testTime'] = datetime.fromtimestamp(row['adminDate'] / 1000).strftime('%H:%M')
                         df.at[index, 'date'] = datetime.fromtimestamp(row['adminDate'] / 1000).strftime('%Y-%m-%d')
                     df = df.drop(['adminDate'], axis=1)
