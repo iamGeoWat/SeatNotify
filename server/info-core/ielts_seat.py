@@ -21,7 +21,7 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path=firefox)
 
 driver.get('https://ielts.neea.edu.cn/login')
-time.sleep(300)  # 300 seconds to login
+time.sleep(60)  # 60 seconds to login
 
 # 获取地址
 monthsJSON = driver.execute_script('return $.getJSON("./querySeat?productId=IELTSPBT")')
@@ -71,12 +71,6 @@ while True:
                     df['testTime'] = ''
                     df['date'] = ''
                     for index, row in df.iterrows():
-                        if row['testFee'] is None:
-                            df.at[index, 'testFee'] = 'N'
-                        if row['lateRegFlag'] is None:
-                            df.at[index, 'lateRegFlag'] = 'N'
-                        if row['lateReg'] is None:
-                            df.at[index, 'lateReg'] = 'N'
                         if row['seatStatus'] == 1:
                             df.at[index, 'seatStatus'] = 1
                         elif row['seatStatus'] == 2:
