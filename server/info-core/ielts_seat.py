@@ -79,8 +79,9 @@ while True:
                             df.at[index, 'seatStatus'] = 2
                         elif row['seatStatus'] == 0:
                             df.at[index, 'seatStatus'] = 3
-                        df.at[index, 'testTime'] = datetime.fromtimestamp(row['adminDate'] / 1000).strftime('%H:%M')
-                        df.at[index, 'date'] = datetime.fromtimestamp(row['adminDate'] / 1000).strftime('%Y-%m-%d')
+                        print(row['adminDate'])
+                        df.at[index, 'testTime'] = datetime.fromtimestamp(row['adminDate'] / 1000 + 28800).strftime('%H:%M')
+                        df.at[index, 'date'] = datetime.fromtimestamp(row['adminDate'] / 1000 + 28800).strftime('%Y-%m-%d')
                     df = df.drop(['adminDate'], axis=1)
                     df['seatBookStatus'] = df['seatStatus']
                     storage = pd.concat([storage, df], ignore_index=True)
@@ -97,4 +98,4 @@ while True:
     update_timestamp = time.time()
     Redis.set('ielts_update_timestamp', int(update_timestamp))
     Redis.publish('ielts_update_timestamp', int(update_timestamp))
-    time.sleep(30)
+    time.sleep(10)
