@@ -5,14 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var seatRouter = require('./routes/seat');
-var seatAllRouter = require('./routes/seatAll');
 var lastUpdateTimeRouter = require('./routes/lastUpdateTime');
 var testDaysListRouter = require('./routes/testDaysList');
 var subscriptionRouter = require('./routes/subscription');
-var ieltsLastUpdateTimeRouter = require('./routes/ieltsLastUpdateTime')
-var ieltsSeatRouter = require('./routes/ieltsSeat')
+var ieltsLastUpdateTimeRouter = require('./routes/ieltsLastUpdateTime');
+var ieltsSeatRouter = require('./routes/ieltsSeat');
+var ieltsSubscriptionRouter = require('./routes/ieltsSubscription');
+var ieltsTestDaysListRouter = require('./routes/ieltsTestDaysList');
 
 var app = express();
 
@@ -33,8 +33,10 @@ app.use('/seat', seatRouter);
 app.use('/lastUpdateTime', lastUpdateTimeRouter);
 app.use('/testDaysList', testDaysListRouter);
 app.use('/subscription', subscriptionRouter);
-app.use('/ieltsLastUpdateTime', ieltsLastUpdateTimeRouter)
-app.use('/ieltsSeat', ieltsSeatRouter)
+app.use('/ieltsLastUpdateTime', ieltsLastUpdateTimeRouter);
+app.use('/ieltsSeat', ieltsSeatRouter);
+app.use('/ieltsSubscription', ieltsSubscriptionRouter);
+app.use('/ieltsTestDaysList', ieltsTestDaysListRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
