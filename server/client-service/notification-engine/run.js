@@ -22,11 +22,9 @@ subRedis.subscribe("update_timestamp", (err, count) => {
         if (hotSubs.length === 0) {
           console.log('No db record in seat_service')
         } else {
-          console.log(hotSubs);
           let cityAtDateAndItsSubscribers = {}; //这样更简单，但是把前后端所有cn改成en更好
           let subscribedCityAtDate = new Set();
           for (let hotSub of hotSubs) {
-            console.log(hotSub['city']);
             subscribedCityAtDate.add(hotSub['city']+'@'+hotSub['date'])
           }
           for (let cityAtDate of subscribedCityAtDate) {
@@ -35,8 +33,6 @@ subRedis.subscribe("update_timestamp", (err, count) => {
           for (let hotSub of hotSubs) {
             cityAtDateAndItsSubscribers[hotSub['city']+'@'+hotSub['date']].push(hotSub['uid'])
           }
-          console.log(subscribedCityAtDate);
-          console.log(cityAtDateAndItsSubscribers);
   
           //---------- prepare seat status data in REDIS ------- OUTPUT: { city@date: how-many-seats-left }
           let parsedRecords = eval(records);
@@ -51,16 +47,12 @@ subRedis.subscribe("update_timestamp", (err, count) => {
               } // prevent status code that is not 0 and 1
             }
           }
-          console.log(cityAtDateAndSeatNum);
   
           //check every city@date from cityAtDateAndItsSubscribers in cityAtDateAndSeatNum, if not 0, mod db::has_seat, do notify, mod db::notified.
           for (let cityAtDate of subscribedCityAtDate) {
-            console.log(cityAtDate);
             if (cityAtDateAndSeatNum[cityAtDate] !== 0) {
               // mod db::has_seat
               let splitCityAndDate = cityAtDate.split('@');
-              console.log(splitCityAndDate);
-              console.log(cityAtDateAndItsSubscribers[cityAtDate]);
               for (let uid of cityAtDateAndItsSubscribers[cityAtDate]) {
                 await subscriptionDao.modHasSeatByUidCityDate(1, uid, splitCityAndDate[0], splitCityAndDate[1] )
                 console.log('ACTION: has_seat modified for ', uid)
@@ -80,10 +72,12 @@ subRedis.subscribe("update_timestamp", (err, count) => {
                       "thing6": {"value": "考位已释放，请前往中国托福官网报名"}
                     }
                   }).then(async (msg) => {
-                    console.log(msg.data);
                     if (msg.data.errcode === 0) {
                       await subscriptionDao.modNotifiedByUidCityDate(1, uid, splitCityAndDate[0], splitCityAndDate[1])
                       console.log('ACTION: notified modified for ', uid)
+                    } else {
+                      console.log('Failed notification:', uid, splitCityAndDate[0], splitCityAndDate[1])
+                      console.log(msg.data);
                     }
                   })
                 })
