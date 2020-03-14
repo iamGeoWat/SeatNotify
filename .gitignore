@@ -5,6 +5,7 @@
 notes/
 wechat-miniprogram/vant/
 wechat-miniprogram/cloudfunctions/**/node_modules
+wechat-miniprogram/src/node_modules
 
 server/client-service/node_modules
 server/redis/redis-5.0.7

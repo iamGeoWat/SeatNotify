@@ -1,4 +1,9 @@
 /**toefl.wxss**/
+page {
+  background-color: #F5F6F9;
+  height: 100%
+}
+
 .container {
   height: 100%;
   display: flex;

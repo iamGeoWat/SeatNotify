@@ -412,7 +412,7 @@ Page({
         that.setData({
           uid: res.result.openid
         })
-        app.globalData.uid = res.code
+        // app.globalData.uid = res.code
       }
     })
     // wx.login({

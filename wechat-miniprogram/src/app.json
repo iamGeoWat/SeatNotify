@@ -4,15 +4,16 @@
   ],
   "subpackages": [
     {
-      "root": "moduleToefl",
+      "root": "pages/toefl",
       "pages": [
-        "pages/toefl"
-      ]
+        "toefl"
+      ],
+      "independent": true
     },
     {
-      "root": "moduleIelts",
+      "root": "pages/ielts",
       "pages": [
-        "pages/ielts"
+        "ielts"
       ],
       "independent": true
     }
