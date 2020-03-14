@@ -1,9 +1,21 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/logs/logs",
-    "pages/toefl/toefl",
-    "pages/ielts/ielts"
+    "pages/index/index"
+  ],
+  "subpackages": [
+    {
+      "root": "moduleToefl",
+      "pages": [
+        "pages/toefl"
+      ]
+    },
+    {
+      "root": "moduleIelts",
+      "pages": [
+        "pages/ielts"
+      ],
+      "independent": true
+    }
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -12,26 +24,5 @@
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
-  "usingComponents": {
-    "van-button": "@vant/weapp/button",
-    "van-tabbar": "@vant/weapp/tabbar",
-    "van-tabbar-item": "@vant/weapp/tabbar-item",
-    "van-popup": "@vant/weapp/popup",
-    "van-area": "@vant/weapp/area",
-    "van-cell-group": "@vant/weapp/cell-group",
-    "van-cell": "@vant/weapp/cell",
-    "van-field": "@vant/weapp/field",
-    "van-tabs": "@vant/weapp/tabs",
-    "van-tab": "@vant/weapp/tab",
-    "van-index-bar": "@vant/weapp/index-bar",
-    "van-index-anchor": "@vant/weapp/index-anchor",
-    "van-toast": "@vant/weapp/toast",
-    "van-image": "@vant/weapp/image",
-    "van-picker": "@vant/weapp/picker",
-    "van-panel": "@vant/weapp/panel",
-    "van-collapse": "@vant/weapp/collapse",
-    "van-collapse-item": "@vant/weapp/collapse-item",
-    "van-notice-bar": "@vant/weapp/notice-bar",
-    "van-overlay": "@vant/weapp/overlay"
-  }
+  "usingComponents": {}
 }

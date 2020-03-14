@@ -244,9 +244,10 @@ Page({
           Toast.fail('网络错误，请重试一下哦')
         }
         console.log(res.result)
-        that.setData({
-          selectedCityInfo: res.result,
-        })
+        that.data.selectedCityInfo = res.result
+        // that.setData({
+        //   selectedCityInfo: res.result,
+        // })
         if (that.data.activeDisplayType === 0) {
           that.setData({
             cityInfoToShow: that.sortCityInfo(that.data.selectedCityInfo, "date")
@@ -354,11 +355,10 @@ Page({
   },
   onGotUserInfo(e) {
     var that = this
-    this.setData({
-      userInfo: e.detail.userInfo,
-    })
-    console.log(that.data.userInfo)
-    app.globalData.userInfo = e.detail.userInfo
+    // this.setData({
+    //   userInfo: e.detail.userInfo,
+    // })
+    // app.globalData.userInfo = e.detail.userInfo
     wx.cloud.callFunction({
       name: 'login',
       success: function (res) {
@@ -389,28 +389,29 @@ Page({
     })
   },
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
+    // if (app.globalData.userInfo) {
+    //   this.setData({
+    //     userInfo: app.globalData.userInfo,
+    //     hasUserInfo: true
+    //   })
+    // } else 
+    if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
         this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+          // userInfo: res.userInfo,
+          // hasUserInfo: true
         })
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
-          app.globalData.userInfo = res.userInfo
+          // app.globalData.userInfo = res.userInfo
           this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
+            // userInfo: res.userInfo,
+            // hasUserInfo: true
           })
         }
       })
@@ -418,10 +419,10 @@ Page({
   },
   getUserInfo: function (e) {
     console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+    // app.globalData.userInfo = e.detail.userInfo
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      // userInfo: e.detail.userInfo,
+      // hasUserInfo: true
     })
   },
   sortCityInfo(data, property) {
