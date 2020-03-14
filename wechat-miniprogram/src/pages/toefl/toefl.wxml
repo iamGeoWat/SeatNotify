@@ -125,7 +125,7 @@
       <van-cell border="{{false}}">
         <view>服务器也有开销，欢迎您支持我们的运营
           <view style="margin-top: 15px">
-            <van-image width="50vw" height="50vw" fit="cover" src="../../images/zan-code.jpg" />
+            <van-image width="50vw" height="50vw" fit="cover" src="/sources/zan-code.jpg" />
           </view>
         </view>
       </van-cell>

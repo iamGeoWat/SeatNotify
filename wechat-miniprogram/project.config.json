@@ -20,7 +20,8 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"nodeModules": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
@@ -34,7 +35,7 @@
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"cloudfunctionRoot": "cloudfunctions/",
-  "miniprogramRoot": "src/",
+	"miniprogramRoot": "src/",
 	"condition": {
 		"search": {
 			"current": -1,

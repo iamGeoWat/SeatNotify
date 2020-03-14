@@ -1,6 +1,6 @@
 //toefl.js
 //获取应用实例
-import Toast from '../../vant/toast/toast.js'
+import Toast from '@vant/weapp/toast/toast.js'
 const app = getApp()
 
 Page({
