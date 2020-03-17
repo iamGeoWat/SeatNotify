@@ -5,7 +5,7 @@
     <van-button type="primary" color="#E62953" size="normal" bind:click="onEntryToefl">托福考位</van-button>
     <van-button style="margin-left: 20px;" type="info" size="normal" bind:click="onEntryIelts">雅思考位</van-button>
     <view style="font-style: italic; color: grey; position: absolute; bottom: 20px; text-align: center; width: 100%">
-      稳定测试版 by GeoWat@1.3ac
+      by GeoWat@1.3ac
     </view>
   </view>
 </view>

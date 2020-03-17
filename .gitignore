@@ -12,3 +12,5 @@ server/redis/redis-5.0.7
 server/client-service/notification-engine/test.js
 server/client-service/notification-engine/test1.js
 server/info-core/test.py
+
+geckodriver.log

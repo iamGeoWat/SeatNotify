@@ -8,14 +8,15 @@
 @Github    iamGeoWat
 --------------------------------------------------
 """
-
 import random
-
 import time
 from selenium import webdriver
 import pandas as pd
-
 import redis
+import sentry_sdk
+
+sentry_sdk.init("https://e87c6824373b41d1b4bd2eeadb579257@sentry.io/4993408")
+
 Redis = redis.StrictRedis('127.0.0.1', 6379)
 
 firefox = r'/usr/local/bin/geckodriver'
