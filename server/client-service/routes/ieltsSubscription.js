@@ -5,8 +5,6 @@ const SubscriptionDao = require('../dao/IeltsSubscriptionDao');
 const subscriptionDao = new SubscriptionDao()
 
 router.get('/', async (req, res, next) => {
-  console.log(req.body)
-  console.log(req.params.uid)
   console.log(req.query.uid)
   var result = await subscriptionDao.queryByUid(req.query.uid)
   res.send(result)

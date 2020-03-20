@@ -86,9 +86,7 @@ Page({
       data: {
         uid: that.data.uid
       },
-      header: {
-        'content-type': 'application/json'
-      },
+      method: 'GET',
       success: function (res) {
         console.log(res.data)
         Toast.clear()
@@ -101,27 +99,9 @@ Page({
         Toast.clear()
         Toast.fail('网络错误，请重试一下哦')
         console.error
-      }
+      },
+      timeout: 5000
     })
-    // wx.cloud.callFunction({
-    //   name: 'ieltsSubscriptionGet',
-    //   data: {
-    //     uid: that.data.uid
-    //   },
-    //   success: function (res) {
-    //     console.log(res.result)
-    //     Toast.clear()
-    //     that.setData({
-    //       subscriptionList: res.result
-    //     })
-    //     console.log(that.data.subscriptionList)
-    //   },
-    //   fail: function () {
-    //     Toast.clear()
-    //     Toast.fail('网络错误，请重试一下哦')
-    //     console.error
-    //   }
-    // })
   },
   onSubCancel(e) {
     console.log(e)
@@ -130,25 +110,25 @@ Page({
     Toast.loading({
       mask: true,
       message: '正在删除...',
-      duration: 5
+      duration: 5000
     })
-    wx.cloud.callFunction({
-      name: 'ieltsSubscriptionDel',
+    wx.request({
+      url: app.globalData.requestUrl + '/ieltsSubscription',
       data: {
         sub_id: e.target.id,
         uid: that.data.uid
       },
+      method: 'DELETE',
       success: function (res) {
-        console.log(res.result)
+        console.log(res.data)
         Toast.clear()
-        if (res.result === {}) {
+        if (res.data === {}) {
           Toast.fail('网络错误，请重试一下哦')
           console.error
         } else {
-          if (res.result.status) {
+          if (res.data.status) {
             Toast.fail('删除失败')
-          } else if (res.result.status === 0) {
-            Toast.success('删除成功')
+          } else if (res.data.status === 0) {
             that.loadSubscriptionList()
           }
         }
@@ -157,7 +137,8 @@ Page({
         Toast.clear()
         Toast.fail('网络错误，请重试一下哦')
         console.error
-      }
+      },
+      timeout: 5000
     })
   },
   onTestDateSelectorOpen() {
@@ -195,26 +176,27 @@ Page({
           Toast.loading({
             mask: true,
             message: '正在提交...',
-            duration: 5
+            duration: 5000
           })
           // todo: realize this part: add ADD function
-          wx.cloud.callFunction({
-            name: 'ieltsSubscriptionAdd',
+          wx.request({
+            url: app.globalData.requestUrl + '/ieltsSubscription',
             data: {
               city: that.data.cityToSub[0].name,
               date: that.data.selectedTestDate,
               uid: that.data.uid
             },
+            method: 'POST',
             success: function (res) {
-              console.log(res.result)
+              console.log(res.data)
               Toast.clear()
-              if (res.result === {}) {
+              if (res.data === {}) {
                 Toast.fail('网络错误，请重试一下哦')
                 console.error
               } else {
-                if (res.result.status) {
+                if (res.data.status) {
                   Toast.fail('重复订阅，请删除已有项目')
-                } else if (res.result.status === 0) {
+                } else if (res.data.status === 0) {
                   Toast.success('订阅成功')
                 }
               }
@@ -223,7 +205,8 @@ Page({
               Toast.clear()
               Toast.fail('网络错误，请重试一下哦')
               console.error
-            }
+            },
+            timeout: 5000
           })
         }
       }
@@ -275,7 +258,7 @@ Page({
         Toast.fail('网络错误，请重试一下哦')
         console.error
       },
-      timeout: '5000'
+      timeout: 5000
     })
 
     // load last update time
@@ -291,7 +274,7 @@ Page({
           lastUpdateTime: timeString
         })
       },
-      timeout: '5000'
+      timeout: 5000
     })
   },
   onDisplayTypeChange(e) {
@@ -367,7 +350,7 @@ Page({
         Toast.fail('网络错误，请重试一下哦')
         console.error
       },
-      timeout: '5000'
+      timeout: 5000
     })
   },
   onGotUserInfo(e) {
