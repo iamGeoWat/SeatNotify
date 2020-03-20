@@ -87,7 +87,7 @@ Page({
         uid: that.data.uid
       },
       header: {
-        'content-type': 'application/x-www-form-urlencoded'
+        'content-type': 'application/json'
       },
       success: function (res) {
         console.log(res.data)
