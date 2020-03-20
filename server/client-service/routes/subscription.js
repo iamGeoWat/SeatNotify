@@ -6,7 +6,8 @@ const subscriptionDao = new SubscriptionDao()
 
 router.get('/', async (req, res, next) => {
   console.log(req.body)
-  var result = await subscriptionDao.queryByUid(req.body.uid)
+  console.log(req.params.uid)
+  var result = await subscriptionDao.queryByUid(req.params.uid)
   res.send(result)
 });
 

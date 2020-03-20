@@ -236,7 +236,7 @@ Page({
                 console.error
               } else {
                 if (res.result.status) {
-                  Toast.fail('重复订阅')
+                  Toast.fail('重复订阅，请删除已有项目')
                 } else if (res.result.status === 0) {
                   Toast.success('订阅成功')
                 }
@@ -256,16 +256,6 @@ Page({
     this.setData({
       cityToSub: e.detail.values,
       showCitySelector: false
-    })
-  },
-  onEntryToefl() {
-    wx.redirectTo({
-      url: '/pages/toefl/toefl',
-    })
-  },
-  onEntryIelts() {
-    wx.redirectTo({
-      url: '/pages/ielts/ielts',
     })
   },
   loadSelectedCityInfo(city) {

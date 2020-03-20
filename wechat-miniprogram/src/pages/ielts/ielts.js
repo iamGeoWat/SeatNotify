@@ -77,18 +77,23 @@ Page({
     Toast.loading({
       mask: true,
       message: '加载中...',
-      duration: 5
+      duration: 5000
     })
-    wx.cloud.callFunction({
-      name: 'ieltsSubscriptionGet',
+    console.log(app.globalData.requestUrl)
+    console.log(that.data.uid)
+    wx.request({
+      url: app.globalData.requestUrl + '/ieltsSubscription',
       data: {
         uid: that.data.uid
       },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
       success: function (res) {
-        console.log(res.result)
+        console.log(res.data)
         Toast.clear()
         that.setData({
-          subscriptionList: res.result
+          subscriptionList: res.data
         })
         console.log(that.data.subscriptionList)
       },
@@ -98,6 +103,25 @@ Page({
         console.error
       }
     })
+    // wx.cloud.callFunction({
+    //   name: 'ieltsSubscriptionGet',
+    //   data: {
+    //     uid: that.data.uid
+    //   },
+    //   success: function (res) {
+    //     console.log(res.result)
+    //     Toast.clear()
+    //     that.setData({
+    //       subscriptionList: res.result
+    //     })
+    //     console.log(that.data.subscriptionList)
+    //   },
+    //   fail: function () {
+    //     Toast.clear()
+    //     Toast.fail('网络错误，请重试一下哦')
+    //     console.error
+    //   }
+    // })
   },
   onSubCancel(e) {
     console.log(e)
@@ -189,7 +213,7 @@ Page({
                 console.error
               } else {
                 if (res.result.status) {
-                  Toast.fail('重复订阅')
+                  Toast.fail('重复订阅，请删除已有项目')
                 } else if (res.result.status === 0) {
                   Toast.success('订阅成功')
                 }
@@ -211,16 +235,6 @@ Page({
       showCitySelector: false
     })
   },
-  onEntryToefl() {
-    wx.redirectTo({
-      url: '/pages/toefl/toefl',
-    })
-  },
-  onEntryIelts() {
-    wx.redirectTo({
-      url: '/pages/ielts/ielts',
-    })
-  },
   loadSelectedCityInfo(city) {
     var that = this
     console.log(city)
@@ -230,24 +244,21 @@ Page({
       duration: 0
     })
     //load information on server here
-    wx.cloud.callFunction({
-      // 云函数名称
-      name: 'ieltsSeatInfoByProvince',
-      // 传给云函数的参数
+    wx.request({
+      url: app.globalData.requestUrl + '/ieltsSeat',
       data: {
         province: city[0].name
       },
+      method: 'POST',
       success: function (res) {
+        console.log(res)
         console.log('2')
         Toast.clear()
-        if (res.result.length === 0) {
+        if (res.data.length === 0) {
           Toast.fail('网络错误，请重试一下哦')
         }
-        console.log(res.result)
-        that.data.selectedCityInfo = res.result
-        // that.setData({
-        //   selectedCityInfo: res.result,
-        // })
+        console.log(res.data)
+        that.data.selectedCityInfo = res.data
         if (that.data.activeDisplayType === 0) {
           that.setData({
             cityInfoToShow: that.sortCityInfo(that.data.selectedCityInfo, "date")
@@ -263,20 +274,24 @@ Page({
         Toast.clear()
         Toast.fail('网络错误，请重试一下哦')
         console.error
-      }
+      },
+      timeout: '5000'
     })
+
     // load last update time
-    wx.cloud.callFunction({
-      name: 'ieltsLastUpdateTime',
+    wx.request({
+      url: app.globalData.requestUrl + '/ieltsLastUpdateTime',
+      method: 'GET',
       success: function (res) {
-        console.log(res.result)
-        var date = new Date(parseInt(res.result) * 1000)
+        console.log(res.data)
+        var date = new Date(parseInt(res.data) * 1000)
         var timeString = date.toLocaleString()
         console.log(timeString)
         that.setData({
           lastUpdateTime: timeString
         })
-      }
+      },
+      timeout: '5000'
     })
   },
   onDisplayTypeChange(e) {
@@ -327,11 +342,12 @@ Page({
       message: '获取考试日期',
       duration: 0
     })
-    wx.cloud.callFunction({
-      name: 'ieltsTestDaysList',
+    wx.request({
+      url: app.globalData.requestUrl + '/ieltsTestDaysList',
+      method: 'GET',
       success: function (res) {
-        console.log(res.result)
-        var str = res.result.substring(res.result.indexOf('{') + 1, res.result.lastIndexOf('}'))
+        console.log(res.data)
+        var str = res.data.substring(res.data.indexOf('{') + 1, res.data.lastIndexOf('}'))
         console.log(str)
         var reg1 = new RegExp("'", "g")
         var str = str.replace(reg1, "")
@@ -350,15 +366,12 @@ Page({
         Toast.clear()
         Toast.fail('网络错误，请重试一下哦')
         console.error
-      }
+      },
+      timeout: '5000'
     })
   },
   onGotUserInfo(e) {
     var that = this
-    // this.setData({
-    //   userInfo: e.detail.userInfo,
-    // })
-    // app.globalData.userInfo = e.detail.userInfo
     wx.cloud.callFunction({
       name: 'login',
       success: function (res) {
