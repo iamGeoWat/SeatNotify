@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//sentry.io fault logging
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: 'https://ae4081dec4e54a37a4a08fdfff5ce7c7@sentry.io/5172204' });
+
 var indexRouter = require('./routes/index');
 var seatRouter = require('./routes/seat');
 var lastUpdateTimeRouter = require('./routes/lastUpdateTime');

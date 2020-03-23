@@ -7,6 +7,10 @@ const SubscriptionDao = require('../dao/SubscriptionDao');
 const subscriptionDao = new SubscriptionDao();
 const wxConf = require('../config/wxConfig');
 
+//sentry.io fault logging
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: 'https://ae4081dec4e54a37a4a08fdfff5ce7c7@sentry.io/5172204' });
+
 subRedis.subscribe("update_timestamp", (err, count) => {
   console.log("err:", err);
   console.log("count:", count);
@@ -54,7 +58,7 @@ subRedis.subscribe("update_timestamp", (err, count) => {
               // mod db::has_seat
               let splitCityAndDate = cityAtDate.split('@');
               for (let uid of cityAtDateAndItsSubscribers[cityAtDate]) {
-                await subscriptionDao.modHasSeatByUidCityDate(1, uid, splitCityAndDate[0], splitCityAndDate[1] )
+                await subscriptionDao.modHasSeatByUidCityDate(1, uid, splitCityAndDate[0], splitCityAndDate[1] );
                 console.log('ACTION: has_seat modified for ', uid)
               } // mod db::has_seat
               for (let uid of cityAtDateAndItsSubscribers[cityAtDate]) {
@@ -73,10 +77,10 @@ subRedis.subscribe("update_timestamp", (err, count) => {
                     }
                   }).then(async (msg) => {
                     if (msg.data.errcode === 0) {
-                      await subscriptionDao.modNotifiedByUidCityDate(1, uid, splitCityAndDate[0], splitCityAndDate[1])
+                      await subscriptionDao.modNotifiedByUidCityDate(1, uid, splitCityAndDate[0], splitCityAndDate[1]);
                       console.log('ACTION: notified modified for ', uid)
                     } else {
-                      console.log('Failed notification:', uid, splitCityAndDate[0], splitCityAndDate[1])
+                      console.log('Failed notification:', uid, splitCityAndDate[0], splitCityAndDate[1]);
                       console.log(msg.data);
                     }
                   })

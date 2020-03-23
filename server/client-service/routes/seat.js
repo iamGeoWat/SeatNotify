@@ -5,10 +5,10 @@ var redis = new Redis();
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  console.log(req.body.province)
+  console.log(req.body.province);
   redis.get('seat').then(async function (rawData) {
     var infoList = eval(rawData);
-    var matchedList = []
+    var matchedList = [];
     for (var i in infoList) {
       if ((infoList[i].provinceCn === req.body.province) && (infoList[i].cityCn === req.body.city)) {
         matchedList.push(infoList[i])
