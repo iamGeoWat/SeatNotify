@@ -399,7 +399,7 @@ Page({
       timeout: 5000
     })
   },
-  onGotUserInfo(e) {
+  onGetUserInfo(e) {
     var that = this
     // this.setData({
     //   userInfo: e.detail.userInfo,
@@ -411,7 +411,8 @@ Page({
         console.log(res.result)
         console.log(res.result.openid)
         that.setData({
-          uid: res.result.openid
+          uid: res.result.openid,
+          loggedIn: true
         })
         // app.globalData.uid = res.code
       }
@@ -425,9 +426,6 @@ Page({
     //     app.globalData.uid = res.code
     //   }
     // })
-    that.setData({
-      loggedIn: true
-    })
   },
   bindViewTap: function () {
     wx.navigateTo({

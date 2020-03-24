@@ -1,1 +1,5 @@
 /**index.wxss**/
+.page-button {
+  height: 100px;
+  width: 100px;
+}

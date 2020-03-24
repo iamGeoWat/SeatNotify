@@ -1,7 +1,11 @@
 {
   "usingComponents": {
     "van-button": "@vant/weapp/button",
-    "van-image": "@vant/weapp/image"
+    "van-image": "@vant/weapp/image",
+    "van-grid": "@vant/weapp/grid",
+    "van-grid-item": "@vant/weapp/grid-item",
+    "van-icon": "@vant/weapp/icon",
+    "van-popup": "@vant/weapp/popup"
   },
   "disableScroll": true
 }

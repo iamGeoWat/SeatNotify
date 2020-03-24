@@ -22,7 +22,7 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path=firefox)
 
 driver.get('https://ielts.neea.edu.cn/login')
-time.sleep(120)  # 60 seconds to login
+time.sleep(120)  # 120 seconds to login
 
 # 获取地址
 monthsJSON = driver.execute_script('return $.getJSON("./querySeat?productId=IELTSPBT")')
@@ -57,7 +57,7 @@ while True:
                     continue
                 else:
                     print(province, month, "data fetched")
-                for preciseTime, dataDetail in dataJSON.items():
+                for preciseTime, dataDetail in dataJSON.items(): # todo: error detection here
                     df = pd.DataFrame(dataDetail)
                     df = df.drop(['actionType', 'adminDateCn', 'adminDateEn', 'adminGuid', 'adminId', 'adminProvince',
                                   'centerGuid', 'cityCode', 'optStatus', 'optStatusCn', 'optStatusEn',

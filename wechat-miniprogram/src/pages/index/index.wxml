@@ -1,11 +1,51 @@
 <!--index.wxml-->
 <view class="container">
-  <view style="margin-top: 50%; text-align: center;">
-    <van-image src="/images/logo.jpg" width="380px" height="130px" />
-    <van-button type="primary" color="#E62953" size="normal" bind:click="onEntryToefl">托福考位</van-button>
-    <van-button style="margin-left: 20px;" type="info" size="normal" bind:click="onEntryIelts">雅思考位</van-button>
-    <view style="font-style: italic; color: grey; position: absolute; bottom: 20px; text-align: center; width: 100%">
-      by GeoWat@1.3ac
-    </view>
+  <view style="text-align: center;">
+    <van-image src="/images/logo.jpg" width="20rem" height="8rem" fit="contain" />
+    <van-grid column-num="2" gutter="6" square>
+      <van-grid-item
+        link-type="redirectTo"
+        url="/pages/toefl/toefl"
+        use-slot
+      >
+        <image 
+          style="width: 120px; height: 40px;"
+          src="/images/toefl-logo.png"
+        />
+        <van-button plain color="#586CA4" block style="width: 90%; margin-top: 25px">托福考位 ➡️</van-button>
+      </van-grid-item>
+      <van-grid-item
+        link-type="redirectTo"
+        url="/pages/ielts/ielts"
+        use-slot
+      >
+        <image 
+          style="width: 120px; height: 40px;"
+          src="/images/ielts-logo.png"
+        />
+        <van-button plain color="#D4506E" block style="width: 90%; margin-top: 25px">雅思考位 ➡️</van-button>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <van-icon name="chat-o" size="50" />
+        <van-button open-type="contact" block style="width: 90%; margin-top: 20px">联系开发者</van-button>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <van-icon name="bulb-o" size="55" />
+        <van-button bind:click="showMessageBoard" block style="width: 90%; margin-top: 20px">更新与公告</van-button>
+      </van-grid-item>
+    </van-grid>
+    <view style="font-style: italic; color: grey; position: absolute; bottom: 20px; text-align: center; width: 100%">by GeoWat@1.3ac</view>
+    <van-popup
+      custom-style="height: 80%; width: 90%; background-color: #F2F4F8"
+      closeable
+      show="{{ ifShowMessageBoard }}"
+      bind:close="onMessageBoardClose"
+    >
+      <view style="padding: 12% 5% 5% 5%;">
+        <view style="margin-top: 5%" wx:for="{{messageBoard}}" wx:key="index">
+          <text>[{{item.time}}]\n{{item.text}}</text>
+        </view>
+      </view>
+    </van-popup>
   </view>
 </view>
