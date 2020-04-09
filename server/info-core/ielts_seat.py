@@ -5,7 +5,7 @@
 @Github    iamGeoWat
 --------------------------------------------------
 """
-
+import sys
 import random
 import time
 from datetime import datetime
@@ -13,6 +13,7 @@ from selenium import webdriver
 import pandas as pd
 import redis
 import sentry_sdk
+from sentry_sdk import capture_message
 
 sentry_sdk.init("https://e87c6824373b41d1b4bd2eeadb579257@sentry.io/4993408")
 
@@ -22,26 +23,33 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path=firefox)
 
 driver.get('https://ielts.neea.edu.cn/login')
-time.sleep(120)  # 120 seconds to login
+time.sleep(80)  # 80 seconds to login
 
 # 获取地址
-monthsJSON = driver.execute_script('return $.getJSON("./querySeat?productId=IELTSPBT")')
-
-monthsList = []
-for i in range(len(monthsJSON['months'])):
-    monthsList.append(monthsJSON['months'][i]['adminMonth'])
-
 provincesListCn = ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '上海', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北',
                  '湖南', '广东', '广西', '海南', '重庆', '四川', '贵州', '云南', '陕西', '甘肃', '新疆']
 provincesList = ['11', '12', '13', '14', '15', '21', '22', '23', '31', '32', '33', '34', '35', '36', '37', '41', '42',
                  '43', '44', '45', '46', '50', '51', '52', '53', '61', '62', '65']
 
 # continuously fetching data
-
 while True:
     # 获取考试日期
+    try:
+        monthsJSON = driver.execute_script('return $.getJSON("./querySeat?productId=IELTSPBT")')
+        if 'months' not in monthsJSON:
+            raise Exception
+        monthsList = []
+        for i in range(len(monthsJSON['months'])):
+            monthsList.append(monthsJSON['months'][i]['adminMonth'])
+    except Exception as e:
+        print(str(e))
+        print('IELTS core login session expired. Please re-login.')
+        capture_message('IELTS core login session expired. Please re-login.')
+        sys.exit(1)
+
     storage = pd.DataFrame()
     daysList = set()
+    valid_data = True
     for province in provincesList:
         for month in monthsList:
             js = 'return $.getJSON("./queryTestSeats",{queryMonths: "%s", queryProvinces: "%s", productId: "%s"});' % (month, province, 'IELTSPBT')
@@ -93,12 +101,17 @@ while True:
                 time.sleep(sleep_time)
             except Exception as e:
                 print(str(e))
+                print('Something went wrong.')
+                valid_data = False
                 break
+        if not valid_data:
+            break
     # storage go to redis
-    print(storage)
-    Redis.set('ielts_seat', str(storage.to_dict('records')))
-    Redis.set('ielts_days_list', str(daysList))
-    update_timestamp = time.time()
-    Redis.set('ielts_update_timestamp', int(update_timestamp))
-    Redis.publish('ielts_update_timestamp', int(update_timestamp))
+    if valid_data:
+        print(storage)
+        Redis.set('ielts_seat', str(storage.to_dict('records')))
+        Redis.set('ielts_days_list', str(daysList))
+        update_timestamp = time.time()
+        Redis.set('ielts_update_timestamp', int(update_timestamp))
+        Redis.publish('ielts_update_timestamp', int(update_timestamp))
     time.sleep(10)
