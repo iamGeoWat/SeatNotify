@@ -26,6 +26,7 @@ router.post('/', function(req, res, next) {
       delete matchedList[j].cityCn;
       delete matchedList[j].provinceCn;
     }
+    console.log(matchedList)
     res.send(matchedList);
 })
 });

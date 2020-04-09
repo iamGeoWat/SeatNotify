@@ -232,6 +232,9 @@ Page({
       data: {
         province: city[0].name
       },
+      header: {
+        'content-type': 'application/json',
+      },
       method: 'POST',
       success: function (res) {
         console.log(res)

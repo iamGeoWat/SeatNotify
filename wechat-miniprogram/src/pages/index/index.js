@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   data: {
     ifShowMessageBoard: false,
-    messageBoard: [{_id: '1', text: '加载中...', time: 'Now: '}]
+    messageBoard: [{_id: '1', text: '加载中...', time: 'Now'}]
   },
   showMessageBoard: function () {
     var that = this

@@ -279,6 +279,10 @@ Page({
         province: city[0].name,
         city: city[1].name
       },
+      header: {
+        'content-type': 'application/json',
+        'cache-control': 'no-cache'
+      },
       method: 'POST',
       success: function (res) {
         console.log(res)
