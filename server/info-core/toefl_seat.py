@@ -8,12 +8,14 @@
 @Github    iamGeoWat
 --------------------------------------------------
 """
+import sys
 import random
 import time
 from selenium import webdriver
 import pandas as pd
 import redis
 import sentry_sdk
+from sentry_sdk import capture_message
 
 sentry_sdk.init("https://e87c6824373b41d1b4bd2eeadb579257@sentry.io/4993408")
 
@@ -23,7 +25,7 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path = firefox)
 
 driver.get('https://toefl.neea.edu.cn/login')
-time.sleep(80)  # 80 seconds to login
+time.sleep(15)  # 80 seconds to login
 
 # 获取地址
 citiesJSON = driver.execute_script('return $.getJSON("/getTestCenterProvinceCity")')
@@ -39,10 +41,19 @@ for i in range(len(citiesJSON)):
 
 while True:
 	# 获取考试日期
-	daysJSON = driver.execute_script('return $.getJSON("testDays")')
-	daysList = list(daysJSON)
+	daysList = None
+	try:
+		daysJSON = driver.execute_script('return $.getJSON("testDays")')
+		daysList = list(daysJSON)
+	except Exception as e:
+		print(str(e))
+		print('TOEFL core login session expired. Please re-login.')
+		capture_message('TOEFL core login session expired. Please re-login.')
+		sys.exit(1)
 
 	storage = pd.DataFrame()
+	valid_data = True
+	print('A new round of data fetching started.')
 	for city in citiesList:
 		for date in daysList[0:9]:
 			js = 'return $.getJSON("testSeat/queryTestSeats",{city: "%s",testDay: "%s"});' % (city, date)
@@ -67,11 +78,16 @@ while True:
 				time.sleep(sleep_time)
 			except Exception as e:
 				print(str(e))
+				print('Something went wrong.')
+				valid_data = False
 				break
+		if not valid_data:
+			break
 	# storage go to redis
-	Redis.set('seat', str(storage.to_dict('records')))
-	Redis.set('days_list', str(daysList[0:9]))
-	update_timestamp = time.time()
-	Redis.set('update_timestamp', int(update_timestamp))
-	Redis.publish('update_timestamp', int(update_timestamp))
+	if valid_data:
+		Redis.set('seat', str(storage.to_dict('records')))
+		Redis.set('days_list', str(daysList[0:9]))
+		update_timestamp = time.time()
+		Redis.set('update_timestamp', int(update_timestamp))
+		Redis.publish('update_timestamp', int(update_timestamp))
 	time.sleep(10)
