@@ -25,7 +25,7 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path = firefox)
 
 driver.get('https://toefl.neea.edu.cn/login')
-time.sleep(15)  # 80 seconds to login
+time.sleep(80)  # 80 seconds to login
 
 # 获取地址
 citiesJSON = driver.execute_script('return $.getJSON("/getTestCenterProvinceCity")')
