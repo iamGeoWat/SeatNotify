@@ -25,7 +25,7 @@ firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path = firefox)
 
 driver.get('https://toefl.neea.edu.cn/login')
-time.sleep(80)  # 80 seconds to login
+time.sleep(20)  # 80 seconds to login
 
 # 获取地址
 citiesJSON = driver.execute_script('return $.getJSON("/getTestCenterProvinceCity")')
@@ -56,6 +56,7 @@ while True:
 	print('A new round of data fetching started.')
 	for city in citiesList:
 		for date in daysList[0:9]:
+			print('Fetching data from ' + city + ' at ' + date)
 			js = 'return $.getJSON("testSeat/queryTestSeats",{city: "%s",testDay: "%s"});' % (city, date)
 			try:
 				dataJSON = driver.execute_script(js)
@@ -74,13 +75,14 @@ while True:
 					df['date'] = date
 					storage = pd.concat([storage, df], ignore_index=True)
 					print(storage)
-				sleep_time = round(random.uniform(1, 2), 1)
+				sleep_time = round(random.uniform(2, 3), 1)
 				time.sleep(sleep_time)
 			except Exception as e:
 				print(str(e))
 				print('Something went wrong.')
-				valid_data = False
-				break
+				valid_data = True
+				time.sleep(2)
+				continue
 		if not valid_data:
 			break
 	# storage go to redis

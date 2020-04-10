@@ -97,13 +97,14 @@ while True:
                     df['seatBookStatus'] = df['seatStatus']
                     storage = pd.concat([storage, df], ignore_index=True)
                     print(storage)
-                sleep_time = round(random.uniform(1, 2), 1)
+                sleep_time = round(random.uniform(2, 3), 1)
                 time.sleep(sleep_time)
             except Exception as e:
                 print(str(e))
                 print('Something went wrong.')
-                valid_data = False
-                break
+                valid_data = True
+                time.sleep(2)
+                continue
         if not valid_data:
             break
     # storage go to redis
