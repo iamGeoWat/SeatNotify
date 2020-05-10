@@ -22,7 +22,7 @@ Redis = redis.StrictRedis('127.0.0.1', 6379)
 firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path=firefox)
 
-driver.get('https://ielts.neea.edu.cn/login')
+driver.get('https://ielts.neea.cn/login')
 time.sleep(80)  # 80 seconds to login
 
 # 获取地址

@@ -1,18 +1,18 @@
 <!--index.wxml-->
 <view class="container">
-  <view style="text-align: center;">
-    <van-image src="/images/logo.jpg" width="20rem" height="8rem" fit="contain" />
-    <van-grid column-num="2" gutter="6" square>
+  <view style="text-align: center; height: 100%">
+    <van-image src="/images/logo.jpg" width="20rem" height="8%" fit="contain" />
+    <van-grid column-num="2" gutter="6">
       <van-grid-item
         link-type="redirectTo"
         url="/pages/toefl/toefl"
         use-slot
       >
         <image 
-          style="width: 120px; height: 40px;"
+          class="grid-img"
           src="/images/toefl-logo.png"
         />
-        <van-button plain color="#586CA4" block style="width: 90%; margin-top: 25px">托福考位 ➡️</van-button>
+        <van-button class="grid-button" plain color="#586CA4" block>托福考位 ➡️</van-button>
       </van-grid-item>
       <van-grid-item
         link-type="redirectTo"
@@ -20,21 +20,24 @@
         use-slot
       >
         <image 
-          style="width: 120px; height: 40px;"
+          class="grid-img"
           src="/images/ielts-logo.png"
         />
-        <van-button plain color="#D4506E" block style="width: 90%; margin-top: 25px">雅思考位 ➡️</van-button>
+        <van-button class="grid-button" plain color="#D4506E" block>雅思考位 ➡️</van-button>
       </van-grid-item>
       <van-grid-item use-slot>
-        <van-icon name="chat-o" size="50" />
-        <van-button open-type="contact" block style="width: 90%; margin-top: 20px">联系开发者</van-button>
+        <van-icon class="grid-icon" name="chat-o" size="45" />
+        <van-button class="grid-button" open-type="contact" block>联系开发者</van-button>
       </van-grid-item>
       <van-grid-item use-slot>
-        <van-icon name="bulb-o" size="55" />
-        <van-button bind:click="showMessageBoard" block style="width: 90%; margin-top: 20px">更新与公告</van-button>
+        <van-icon class="grid-icon" name="bulb-o" size="45"/>
+        <van-button class="grid-button" bind:click="showMessageBoard" block>更新与公告</van-button>
       </van-grid-item>
     </van-grid>
-    <view style="font-style: italic; color: grey; position: absolute; bottom: 20px; text-align: center; width: 100%">by GeoWat@1.3ac</view>
+    <view wx:if="{{ifShowAdText}}" style="font-style: italic; font-size: 0.6rem; color: grey; text-align: right; margin-right: 2.5%">{{adText}}</view>
+    <view class="ad-area">
+      <view class="ad-compo"><ad unit-id="adunit-d52199f1af2191ff" ad-intervals="30"></ad></view>
+    </view>
     <van-popup
       custom-style="height: 80%; width: 90%; background-color: #F2F4F8"
       closeable

@@ -3,3 +3,29 @@
   height: 100px;
   width: 100px;
 }
+
+.ad-area {
+  margin-top: 1%;
+  width: 100%;
+  justify-content: center;  
+  align-items: center;
+  display: flex;
+}
+
+.ad-compo {
+  width: 97%;
+}
+
+.grid-button {
+  width: 90%;
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+
+.grid-img {
+  width: 120px;
+  height: 40px;
+  margin-top: 8%;
+}
+
+.grid-icon {}

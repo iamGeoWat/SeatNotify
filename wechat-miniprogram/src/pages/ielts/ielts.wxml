@@ -114,8 +114,8 @@
   <view wx:if="{{activeTab === 2}}">
     <van-cell-group title="登录">
       <van-cell title="考位监控功能需要登录">
-        <van-button wx:if="{{!loggedIn}}" type="primary" size="normal" bind:click="onGetUserInfo" >登录</van-button>
-        <van-button wx:else disabled="{{true}}">已登录</van-button>
+        <van-button wx:if="{{!loggedIn}}" type="primary" size="normal" bind:click="onGetUserInfo">登录</van-button>
+        <van-button wx:else size="normal" bind:click="onGetUserInfo">重新登录</van-button>
       </van-cell>
     </van-cell-group>
     <van-cell-group title="关于">

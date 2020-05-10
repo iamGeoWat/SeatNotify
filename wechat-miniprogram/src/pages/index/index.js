@@ -4,6 +4,8 @@ const app = getApp()
 
 Page({
   data: {
+    ifShowAdText: false,
+    adText: '',
     ifShowMessageBoard: false,
     messageBoard: [{_id: '1', text: '加载中...', time: 'Now'}]
   },
@@ -29,5 +31,26 @@ Page({
       ifShowMessageBoard: false
     })
   },
-  onLoad: function () {},
+  onLoad: function () {
+    var that = this
+    wx.cloud.callFunction({
+      name: 'getAdText',
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          adText: res.result.data[0].text,
+          ifShowAdText: res.result.data[0].status
+        })
+      }
+    })
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      console.log(res.target)
+    }
+    return {
+      title: '看看考位助手',
+      path: '/pages/index/index'
+    }
+  }
 })

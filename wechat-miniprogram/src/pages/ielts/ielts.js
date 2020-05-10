@@ -2,6 +2,8 @@
 //获取应用实例
 import Toast from '@vant/weapp/toast/toast.js'
 const app = getApp()
+//card ad part 1
+let interstitialAd = null
 
 Page({
   data: {
@@ -79,7 +81,6 @@ Page({
       message: '加载中...',
       duration: 5000
     })
-    console.log(app.globalData.requestUrl)
     console.log(that.data.uid)
     wx.request({
       url: app.globalData.requestUrl + '/ieltsSubscription',
@@ -198,6 +199,14 @@ Page({
                   Toast.fail('重复订阅，请删除已有项目')
                 } else if (res.data.status === 0) {
                   Toast.success('订阅成功')
+                  // card ad part 3
+                  setTimeout(() => {
+                    if (interstitialAd) {
+                      interstitialAd.show().catch((err) => {
+                        console.error(err)
+                      })
+                    }
+                  }, 800)
                 }
               }
             },
@@ -355,6 +364,10 @@ Page({
   },
   onGetUserInfo(e) {
     var that = this
+    that.setData({
+      uid: '未登录',
+      loggedIn: false
+    })
     wx.cloud.callFunction({
       name: 'login',
       success: function (res) {
@@ -364,18 +377,15 @@ Page({
           uid: res.result.openid,
           loggedIn: true
         })
-        // app.globalData.uid = res.code
+        wx.setStorage({
+          key: 'uid',
+          data: res.result.openid,
+          fail: function (e) {
+            console.log(e)
+          }
+        })
       }
     })
-    // wx.login({
-    //   success: function (res) {
-    //     console.log(res)
-    //     that.setData({
-    //       uid: res.code
-    //     })
-    //     app.globalData.uid = res.code
-    //   }
-    // })
   },
   bindViewTap: function () {
     wx.navigateTo({
@@ -383,12 +393,18 @@ Page({
     })
   },
   onLoad: function () {
-    // if (app.globalData.userInfo) {
-    //   this.setData({
-    //     userInfo: app.globalData.userInfo,
-    //     hasUserInfo: true
-    //   })
-    // } else 
+    // 进入页面时检查storage里有没有uid
+    var that = this
+    wx.getStorage({
+      key: 'uid',
+      success: function (res) {
+        console.log('uid exists: ' + res.data)
+        that.setData({
+          uid: res.data,
+          loggedIn: true
+        })
+      }
+    })
     if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -408,6 +424,19 @@ Page({
             // hasUserInfo: true
           })
         }
+      })
+    }
+    //card ad part 2
+    if (wx.createInterstitialAd) {
+      interstitialAd = wx.createInterstitialAd({ adUnitId: 'adunit-26b28cca79272a47' })
+      interstitialAd.onLoad(() => {
+        console.log('ad load event emit')
+      })
+      interstitialAd.onError((err) => {
+        console.log('ad error event emit', err)
+      })
+      interstitialAd.onClose((res) => {
+        console.log('ad close event emit', res)
       })
     }
   },
@@ -441,5 +470,14 @@ Page({
     });
     console.log(c)
     return c;
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      console.log(res.target)
+    }
+    return {
+      title: '这里可以查询、监控雅思考位，快来看看吧！',
+      path: '/pages/index/index'
+    }
   }
 })
