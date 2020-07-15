@@ -1,0 +1,2 @@
+make sure Redis-server AND mysql-server started, mysql has DB seat_service TABLE subscription / ielts_subscription
+=> info-core/toefl => info-core/ielts => wx-token-control => npm start www => notification-engine => ielts-notification-engine
