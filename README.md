@@ -13,7 +13,7 @@
     
 3. 你的分支有修改后，将更新推到远程分支
     - git add . (添加修改到git)
-    - git commit 'commit-message' (commit你的修改)
+    - git commit -m 'commit-message' (commit你的修改)
     - git push origin your-branch (将修改push到远程)
 
 4. Pull Request 前的操作
