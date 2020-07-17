@@ -9,6 +9,12 @@ Page({
     ifShowMessageBoard: false,
     messageBoard: [{_id: '1', text: '加载中...', time: 'Now'}]
   },
+  goToPage: function (e) {
+    console.log(e)
+    wx.redirectTo({
+      url: e.currentTarget.dataset.url
+    })
+  },
   showMessageBoard: function () {
     var that = this
     that.setData({
