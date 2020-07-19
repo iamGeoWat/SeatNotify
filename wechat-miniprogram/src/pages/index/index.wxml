@@ -5,17 +5,17 @@
       <van-image src="/images/logo.jpg" width="80%" height="100%" fit="contain" />
   </view>
     <view class="cu-card">
-      <view class="cu-item bg-img shadow-blur" style="background-image:url(/images/toefl-bg-pic.jpg)" bindtap="goToPage" data-url="{{'/pages/toefl/toefl'}}">
+      <view class="cu-item bg-img shadow-blur bg-blue" style="background-image:url(https://7365-seat-notify-bn81l-1301277690.tcb.qcloud.la/toefl-bg-pic.jpg?sign=46483448e29bc524a4ea85cd41f0287d&t=1595076351)" bindtap="goToPage" data-url="{{'/pages/toefl/toefl'}}">
         <view class="cardTitle">托福考位</view>
       </view>
     </view>
     <view class="cu-card">
-      <view class="cu-item bg-img shadow-blur" style="background-image:url(/images/ielts-bg-pic.jpg)" bindtap="goToPage" data-url="{{'/pages/ielts/ielts'}}">
+      <view class="cu-item bg-img shadow-blur bg-red" style="background-image:url(https://7365-seat-notify-bn81l-1301277690.tcb.qcloud.la/ielts-bg-pic.jpg?sign=0e44ffbb4f980bf5b57090c2b1fbcf2e&t=1595076251)" bindtap="goToPage" data-url="{{'/pages/ielts/ielts'}}">
         <view class="cardTitle">雅思考位</view>
       </view>
     </view>
     <view class="cu-card">
-      <view class="cu-item bg-img shadow-blur" style="background-image:url(/images/message-bg-pic.jpg)" bindtap="showMessageBoard">
+      <view class="cu-item bg-img shadow-blur bg-white" style="background-image:url(https://7365-seat-notify-bn81l-1301277690.tcb.qcloud.la/message-bg-pic.jpg?sign=3f174945e55b79a5589d7bb211beae4b&t=1595076339)" bindtap="showMessageBoard">
         <view class="cardTitle">公告栏</view>
       </view>
     </view>
