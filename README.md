@@ -7,9 +7,9 @@
     - git clone https://github.com/iamGeoWat/SeatNotify.git
 
 2. 新建开发分支 git branch end(front-back)/type(feature-doc-fix)/name
-    - 文档更新 doc/doc-name 例：git branch doc/readme
-    - 新增或优化功能 feature/feature-name 例：git branch feature/gre-engine
-    - 修复Bug fix/fix-name 例：git branch fix/mini-program-visual
+    - 文档更新 doc/doc-name 例：git branch front/doc/readme
+    - 新增或优化功能 feature/feature-name 例：git branch back/feature/gre-engine
+    - 修复Bug fix/fix-name 例：git branch front/fix/mini-program-visual
     
 3. 你的分支有修改后，将更新推到远程分支
     - git add . (添加修改到git)
