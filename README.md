@@ -6,7 +6,7 @@
 
     - git clone https://github.com/iamGeoWat/SeatNotify.git
 
-2. 新建开发分支 git branch
+2. 新建开发分支 git branch end(front-back)/type(feature-doc-fix)/name
     - 文档更新 doc/doc-name 例：git branch doc/readme
     - 新增或优化功能 feature/feature-name 例：git branch feature/gre-engine
     - 修复Bug fix/fix-name 例：git branch fix/mini-program-visual
