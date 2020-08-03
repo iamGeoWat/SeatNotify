@@ -5,7 +5,7 @@
 |  Task | Branch | 技术主R | 完成情况 |
 |    ----    |  ----  | -- | --- |
 |  修复小程序底部tabbar  | 待定 | tcy666 |  |
-| 爬虫掉登录态检测、上报sentry | 无 |  |  |
+| 爬虫掉登录态时的错误处理、上报sentry | 无 |  |  |
 | 后端、爬虫 Code Review  | 无 | Dormitabnia |  |
 | 迁移至腾讯云  | 无 | iamGeoWat |  |
 
