@@ -1,2 +1,11 @@
-make sure Redis-server AND mysql-server started, mysql has DB seat_service TABLE subscription / ielts_subscription
-=> info-core/toefl => info-core/ielts => wx-token-control => npm start www => notification-engine => ielts-notification-engine
+prerequisites :
+Redis-server AND mysql-server started,
+mysql has DB seat_service TABLE subscription and ielts_subscription
+
+=> tar -xzf redis-5.0.7, make, start src/redis
+=> wx-token-control
+=> npm start www
+=> notification-engine
+=> ielts-notification-engine
+=> info-core/toefl
+=> info-core/ielts
