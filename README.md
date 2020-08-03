@@ -13,13 +13,15 @@
     - 修复Bug fix/fix-name 例：git branch front/fix/mini-program-visual
     
 3. 切到你刚建的开发分支 git checkout your-branch
+
+修改后的操作
     
-4. 你的分支有修改后，将更新 push 到 Github
+1. 你的分支有修改后，将更新 push 到 Github
     - git add . (添加修改到暂存区)
     - git commit -m 'commit-message' (commit你的修改，commmit message写上修改了什么)
     - git push origin your-branch (将修改push到远程)
 
-5. Pull Request 前的操作
+2. 此分支要做的事情开发完毕，提 Pull Request
     - git checkout master (切回 master 分支)
     - git pull (获取 master 分支的最新修改)
     - git checkout your-branch (切回你的开发分支)
