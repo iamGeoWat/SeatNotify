@@ -1,6 +1,13 @@
 # SeatNotify
 中国大陆托福、GRE考位查询、空考位提醒。TOEFL, GRE seat information and seat notifier.
 
+### 主R的任务罢了
+|  Task | Branch | 技术主R | 
+|    ----    |  ----  | -- |
+|  修复小程序底部tabbar  | 待定 | tcy666 |
+| 迁移至腾讯云  | 无 | iamGeoWat |
+| 后端、爬虫 Code Review  | 无 | Dormitabnia |
+
 ### Git 操作标准 (参考 Git-flow)
 开发前的操作
 1. 克隆仓库到本地
