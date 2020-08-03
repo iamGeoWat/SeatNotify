@@ -4,7 +4,7 @@
 ### 主R的任务罢了
 |  Task | Branch | 谁做 | 完成情况 |
 |    ----    |  ----  | -- | --- |
-|  修复小程序底部tabbar  | 待定 | tcy666 |  |
+|  修复小程序底部tabbar  | tabBar | tcy666 |  |
 | 爬虫掉登录态时的错误处理、上报sentry | 无 |  |  |
 | 后端、爬虫 Code Review  | 无 | Dormitabnia |  |
 | 迁移至腾讯云  | 无 | iamGeoWat |  |
