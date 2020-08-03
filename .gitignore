@@ -13,3 +13,5 @@ server/client-service/notification-engine/test1.js
 server/info-core/test.py
 
 geckodriver.log
+**/.DS_Store
+.DS_Store
