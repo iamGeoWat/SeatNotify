@@ -46,20 +46,21 @@ def handle_expire():
     sys.exit(1)
 
 
+# 获取考试日
+daysList = None
+try:
+    daysJSON = driver.execute_script('return $.getJSON("testDays")')
+    print(daysJSON)
+    daysList = list(daysJSON)
+    if not str.isdigit(daysList[0][0]):
+        handle_expire()
+except Exception as e:
+    print(str(e))
+    sentry_sdk.capture_exception(e)
+
+
 # while循环里持续请求考位信息
 while True:
-    # 获取考试日
-    daysList = None
-    try:
-        daysJSON = driver.execute_script('return $.getJSON("testDays")')
-        print(daysJSON)
-        daysList = list(daysJSON)
-        if not str.isdigit(daysList[0][0]):
-            handle_expire()
-    except Exception as e:
-        print(str(e))
-        sentry_sdk.capture_exception(e)
-
     storage = pd.DataFrame()  # 用 pandas dataframe 存储一个考位信息表
     valid_data = True
     # 可用数据标签，现在未启用。
@@ -108,11 +109,22 @@ while True:
                 sentry_sdk.capture_exception(e)
         if not valid_data:
             break
+
+    # 判断登录态是否存在
+    try:
+        daysJSON = driver.execute_script('return $.getJSON("testDays")')
+        # print(daysJSON)
+        if not str.isdigit(list(daysJSON)[0][0]):
+            handle_expire()
+    except Exception as e:
+        print(str(e))
+        sentry_sdk.capture_exception(e)
+
     # 数据存入 Redis
-    if valid_data:
-        Redis.set('seat', str(storage.to_dict('records')))
-        Redis.set('days_list', str(daysList[0:9]))
-        update_timestamp = time.time()
-        Redis.set('update_timestamp', int(update_timestamp))
-        Redis.publish('update_timestamp', int(update_timestamp))
+    # if valid_data:
+    Redis.set('seat', str(storage.to_dict('records')))
+    Redis.set('days_list', str(daysList[0:9]))
+    update_timestamp = time.time()
+    Redis.set('update_timestamp', int(update_timestamp))
+    Redis.publish('update_timestamp', int(update_timestamp))
     time.sleep(10)
