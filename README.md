@@ -1,5 +1,5 @@
 # SeatNotify
-中国大陆托福、GRE考位查询、空考位提醒。TOEFL, GRE seat information and seat notifier.
+托福、雅思、GRE考位查询、考位释放提醒。TOEFL, IELTS, GRE seat information and seat release notification service.
 
 ### 主R的任务罢了
 |  Task | Branch | 谁做 | 完成情况 |
