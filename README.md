@@ -4,10 +4,11 @@
 ### 主R的任务罢了
 |  Task | Branch | 谁做 | 完成情况 |
 |    ----    |  ----  | -- | --- |
-|  修复小程序底部tabbar  | tabBar | tcy666 |  |
-| 爬虫掉登录态时的错误处理、上报sentry | Master | Dormitabnia |  |
+|  修复小程序底部tabbar  | tabBar | tcy666 | ✅ |
+| 爬虫掉登录态时的错误处理、上报sentry | Master | Dormitabnia | ✅ |
 | 后端、爬虫 Code Review  | Master | Dormitabnia | ✅ |
-| 迁移至腾讯云  | 无 | iamGeoWat |  |
+| 迁移至腾讯云  | 无 | iamGeoWat | ✅ |
+| 使用新版文案 | 无 | 待定 |  |
 
 ### Git 操作标准 (参考 Git-flow)
 开发前的操作
