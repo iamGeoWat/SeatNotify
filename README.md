@@ -8,7 +8,8 @@
 | 爬虫掉登录态时的错误处理、上报sentry | Master | Dormitabnia | ✅ |
 | 后端、爬虫 Code Review  | Master | Dormitabnia | ✅ |
 | 迁移至腾讯云  | 无 | iamGeoWat | ✅ |
-| 使用新版文案 | 无 | 待定 |  |
+| 使用新版文案 | TBD | TBD | iamGeoWat |  |
+| 验证码识别模型训练 | TBD | TBD | Dormitabnia |  |
 
 ### Git 操作标准 (参考 Git-flow)
 开发前的操作
