@@ -7,6 +7,7 @@ let interstitialAd = null
 
 Page({
   data: {
+    PageCur: 'search',
     tmplId: 'hBg0YVqqixtUZH-f776yLuJ0EbB9Vl6bFilyb4Q8B8w',
     subscriptionList: [], // empty in production
     cityList: {
@@ -320,12 +321,24 @@ Page({
       showCitySelector: true
     })
   },
-  onTabChange(e) {
-    var that = this
-    console.log('tab changed', e.detail)
-    that.setData({
-      activeTab: e.detail
-    })
+  NavChange(e) {
+    console.log('tab changed', e)
+    if (e.currentTarget.dataset.cur === "search"){
+      this.setData({
+        activeTab : 0,
+        PageCur: e.currentTarget.dataset.cur
+      })
+    } else if (e.currentTarget.dataset.cur === "watch"){
+      this.setData({
+        activeTab : 1,
+        PageCur: e.currentTarget.dataset.cur
+      }) 
+    } else if (e.currentTarget.dataset.cur === "about") {
+      this.setData({
+        activeTab : 2,
+        PageCur: e.currentTarget.dataset.cur
+      })
+    };
   },
   loadTestDays() {
     var that = this

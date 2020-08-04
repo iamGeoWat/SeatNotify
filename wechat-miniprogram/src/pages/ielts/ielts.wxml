@@ -131,9 +131,25 @@
       </van-cell>
     </van-cell-group>
   </view>
-  <van-tabbar active="{{activeTab}}" bind:change="onTabChange">
-    <van-tabbar-item icon="search">考位查询</van-tabbar-item>
-    <van-tabbar-item icon="eye-o">考位监控</van-tabbar-item>
-    <van-tabbar-item icon="user-circle-o">登录/关于</van-tabbar-item>
-  </van-tabbar>
+
+<view hidden="{{showTestDateSelector||showCitySelector}}" class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="search">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/search{{PageCur=='search'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='search'?'text-blue':'text-gray'}}">考位查询</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="watch">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/watch{{PageCur=='watch'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='watch'?'text-blue':'text-gray'}}">考位监控</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="about">
+    <view class='cuIcon-cu-image'>
+      <image src="/images/about{{PageCur=='about'?'_cur':''}}.png"></image>
+    </view>
+    <view class="{{PageCur=='about'?'text-blue':'text-gray'}}">登陆/关于</view>
+  </view>
+</view>
 </view>

@@ -1,17 +1,17 @@
 <!--index.wxml-->
 <view class="container">
   <view style="height: 100%">
-  <view style="text-align: center; width: 100%; height: 75px;">
-      <van-image src="/images/logo.jpg" width="80%" height="100%" fit="contain" />
-  </view>
-    <view class="cu-card">
-      <view class="cu-item bg-img shadow-blur bg-blue" style="background-image:url(https://7365-seat-notify-bn81l-1301277690.tcb.qcloud.la/toefl-bg-pic.jpg?sign=46483448e29bc524a4ea85cd41f0287d&t=1595076351)" bindtap="goToPage" data-url="{{'/pages/toefl/toefl'}}">
-        <view class="cardTitle">托福考位</view>
-      </view>
+    <view style="text-align: center; width: 100%; height: 75px;">
+        <van-image src="/images/logo.jpg" width="80%" height="100%" fit="contain" />
     </view>
     <view class="cu-card">
       <view class="cu-item bg-img shadow-blur bg-red" style="background-image:url(https://7365-seat-notify-bn81l-1301277690.tcb.qcloud.la/ielts-bg-pic.jpg?sign=0e44ffbb4f980bf5b57090c2b1fbcf2e&t=1595076251)" bindtap="goToPage" data-url="{{'/pages/ielts/ielts'}}">
         <view class="cardTitle">雅思考位</view>
+      </view>
+    </view>
+    <view class="cu-card">
+      <view class="cu-item bg-img shadow-blur bg-blue" style="background-image:url(https://7365-seat-notify-bn81l-1301277690.tcb.qcloud.la/toefl-bg-pic.jpg?sign=46483448e29bc524a4ea85cd41f0287d&t=1595076351)" bindtap="goToPage" data-url="{{'/pages/toefl/toefl'}}">
+        <view class="cardTitle">托福考位</view>
       </view>
     </view>
     <view class="cu-card">
@@ -22,7 +22,6 @@
     <view style="float: right; padding-right: 5%; margin-top: 10px;">
       <button open-type="contact" class="cu-btn bg-yellow round shadow">出现问题了？点此联系开发者</button>
     </view>
-  
     <van-popup
       custom-style="height: 80%; width: 90%; background-color: #F2F4F8; text-align: center"
       closeable
