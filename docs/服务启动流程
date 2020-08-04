@@ -7,6 +7,7 @@ sudo apt-get install mysql-server https://www.jianshu.com/p/f543da1b45e9
 
 Redis-server AND mysql-server started,
 mysql has DB seat_service TABLE subscription and ielts_subscription
+nginx https://eladnava.com/binding-nodejs-port-80-using-nginx/
 
 => tar -xzf redis-5.0.7, make, start src/redis
 => wx-token-control
