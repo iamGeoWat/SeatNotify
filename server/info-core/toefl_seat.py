@@ -20,7 +20,7 @@ sentry_sdk.init("https://e87c6824373b41d1b4bd2eeadb579257@sentry.io/4993408")  #
 Redis = redis.StrictRedis('127.0.0.1', 6379)
 
 # firefox = r'/usr/local/bin/geckodriver'  # 目录下的geckodriver解压后放在这个位置
-firefox = r'C:\Users\a\Documents\GitHub\SeatNotify\server\info-core\geckodriver.exe'
+firefox = r'/usr/local/bin/geckodriver'
 driver = webdriver.Firefox(executable_path=firefox)
 
 driver.get('https://toefl.neea.cn/login')

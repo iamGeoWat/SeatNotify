@@ -1,4 +1,7 @@
 prerequisites :
+geck in /usr/local/bin/geckodriver
+sudo apt install python3-pip
+pip3 install selenium, pandas, redis, sentry_sdk
 Redis-server AND mysql-server started,
 mysql has DB seat_service TABLE subscription and ielts_subscription
 
