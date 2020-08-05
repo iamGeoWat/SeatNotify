@@ -43,7 +43,7 @@ def handle_expire():
     # sentry 错误上报，邮件提醒管理员后手动重启爬虫
     # sentry_sdk.capture_exception(Exception('TOEFL core login session expired. Please re-login.'))
     sentry_sdk.capture_message('TOEFL core login session expired. Please re-login.', level='error')
-#     sys.exit(1)
+    sys.exit(1)
 
 
 # 获取考试日
