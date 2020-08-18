@@ -17,6 +17,7 @@ captcha_recongnition/download/*
 captcha_recongnition/notinuse_images/*
 captcha_recongnition/recongnized_images/*
 captcha_recongnition/unrecongnized_images/*
+captcha_recongnition/recongnized_images.zip
 
 geckodriver.log
 **/.DS_Store
