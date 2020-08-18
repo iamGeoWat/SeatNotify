@@ -1,0 +1,6 @@
+const fs = require('fs')
+fs.readdirSync('./unrecongnized_images').forEach((item, index) => {
+	let bitmap = fs.readFileSync('./unrecongnized_images/' + item)
+	let base64str = Buffer.from(bitmap, 'binary').toString('base64')
+	console.log(base64str)
+})

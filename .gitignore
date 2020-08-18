@@ -12,6 +12,12 @@ server/client-service/notification-engine/test.js
 server/client-service/notification-engine/test1.js
 server/info-core/test.py
 
+captcha_recongnition/node_modules
+captcha_recongnition/download/*
+captcha_recongnition/notinuse_images/*
+captcha_recongnition/recongnized_images/*
+captcha_recongnition/unrecongnized_images/*
+
 geckodriver.log
 **/.DS_Store
 .DS_Store
