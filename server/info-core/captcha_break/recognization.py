@@ -3,6 +3,7 @@ import numpy as np
 from tensorflow.keras.models import *
 import matplotlib.image as mpimg
 from tensorflow.keras.utils import Sequence
+from PIL import Image
 import string
 
 characters = string.digits + string.ascii_uppercase
@@ -12,7 +13,6 @@ model = load_model('cnn.h5')
 
 
 def preprocess(path):
-    from PIL import Image
     img_file = list(filter(lambda x: x.endswith('.jpg'), os.listdir(path)))[0]
 
     im = Image.open('%s%s' % (path, img_file))
@@ -41,3 +41,17 @@ def captcha_break(img_dir) -> str:
     y_pred = model.predict(data_x)
 
     return decode(y_pred)
+
+
+def captcha_break_from_url(target_url):
+    im = Image.open(target_url)
+    out = im.resize((128, 64))
+    if 'img_tmp' not in os.listdir('./'):
+        os.mkdir('img_tmp')
+    out.save('img_tmp/download.jpg')
+    result = captcha_break('img_tmp')
+
+    # for file in os.listdir('img_tmp/'):
+    #     os.remove('img_tmp/%s' % file)
+
+    return result
