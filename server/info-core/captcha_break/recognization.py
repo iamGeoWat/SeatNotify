@@ -46,7 +46,7 @@ def captcha_break(img_dir) -> str:
 def captcha_break_from_url(target_url):
     im = Image.open(target_url)
     out = im.resize((128, 64))
-    if 'img_tmp' not in os.listdir('./'):
+    if 'img_tmp' not in os.listdir('captcha_break/'):
         os.mkdir('img_tmp')
     out.save('img_tmp/download.jpg')
     result = captcha_break('img_tmp')
