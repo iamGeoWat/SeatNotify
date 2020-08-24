@@ -1,3 +1,5 @@
+import requests as req
+from io import BytesIO
 import os
 import numpy as np
 from tensorflow.keras.models import *
@@ -17,7 +19,7 @@ def preprocess(path):
 
     im = Image.open('%s%s' % (path, img_file))
     out = im.resize((128, 64))
-    out.save('resize_input.jpg')
+    out.save('%sresize_input.jpg' % path)
 
 
 def get_pic(filename):
@@ -44,9 +46,10 @@ def captcha_break(img_dir) -> str:
 
 
 def captcha_break_from_url(target_url):
-    im = Image.open(target_url)
+    response = req.get(target_url)
+    im = Image.open(BytesIO(response.content))
     out = im.resize((128, 64))
-    if 'img_tmp' not in os.listdir('captcha_break/'):
+    if 'img_tmp' not in os.listdir('./'):
         os.mkdir('img_tmp')
     out.save('img_tmp/download.jpg')
     result = captcha_break('img_tmp')
