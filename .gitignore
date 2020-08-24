@@ -10,7 +10,8 @@ server/client-service/node_modules
 server/redis/redis-5.0.7
 server/client-service/notification-engine/test.js
 server/client-service/notification-engine/test1.js
-server/info-core/test.py
+server/info-core/venv
+server/info-core/captcha_break/__pycache__
 
 captcha_recongnition/node_modules
 captcha_recongnition/download/*
