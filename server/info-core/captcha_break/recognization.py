@@ -51,7 +51,7 @@ def captcha_break_from_url(target_url):
     out.save('img_tmp/download.jpg')
     result = captcha_break('img_tmp')
 
-    # for file in os.listdir('img_tmp/'):
-    #     os.remove('img_tmp/%s' % file)
+    for file in os.listdir('img_tmp/'):
+        os.remove('img_tmp/%s' % file)
 
     return result
