@@ -13,6 +13,8 @@ import selenium.common.exceptions as sce
 import pandas as pd
 import redis
 import sentry_sdk
+from selenium.webdriver.common.by import By
+from captcha_break.recognization import captcha_break_from_url
 # from sentry_sdk import capture_message, capture_exception
 
 sentry_sdk.init("https://e87c6824373b41d1b4bd2eeadb579257@sentry.io/4993408")  # 监控插件sentry
@@ -21,10 +23,31 @@ Redis = redis.StrictRedis('127.0.0.1', 6379)
 
 # firefox = r'/usr/local/bin/geckodriver'  # 目录下的geckodriver解压后放在这个位置
 firefox = r'/usr/local/bin/geckodriver'
-driver = webdriver.Firefox(executable_path=firefox)
+profile = webdriver.FirefoxProfile()
+profile.set_preference("network.proxy.type", 0)
+driver = webdriver.Firefox(executable_path=firefox, firefox_profile=profile)
 
+# login procedure
 driver.get('https://toefl.neea.cn/login')
-time.sleep(80)  # 80秒时间，在弹出的firefox浏览器登录
+time.sleep(5)
+driver.find_element(By.ID, "userName").click()
+driver.find_element(By.ID, "userName").send_keys("8399558")
+driver.find_element(By.ID, "textPassword").click()
+driver.find_element(By.ID, "textPassword").send_keys("LKX@666")
+driver.find_element(By.ID, "verifyCode").click()
+time.sleep(2)
+captcha_url = driver.find_element(By.ID, "chkImg").get_attribute("src")
+captcha = captcha_break_from_url(captcha_url)
+driver.find_element(By.ID, "verifyCode").send_keys(captcha)
+driver.find_element(By.ID, "btnLogin").click()
+time.sleep(5)
+linkList = driver.find_elements(By.TAG_NAME, "a")
+for link in linkList:
+    if link.get_attribute("innerHTML") == "考位查询":
+        driver.switch_to.frame(link)
+        link.find_element_by_xpath("..").click()
+print(captcha)
+time.sleep(800)  # 80秒时间，在弹出的firefox浏览器登录
 
 # 获取考试城市
 citiesJSON = driver.execute_script('return $.getJSON("/getTestCenterProvinceCity")')  # 通过接口拿到考试城市数据
