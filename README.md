@@ -1,15 +1,16 @@
 # SeatNotify
 托福、雅思、GRE考位查询、考位释放提醒。TOEFL, IELTS, GRE seat information and seat release notification service.
 
-### 主R的任务罢了
+### 任务
 |  Task | Branch | 谁做 | 完成情况 |
 |    ----    |  ----  | -- | --- |
 |  修复小程序底部tabbar  | tabBar | tcy666 | ✅ |
 | 爬虫掉登录态时的错误处理、上报sentry | Master | Dormitabnia | ✅ |
-| 后端、爬虫 Code Review  | Master | Dormitabnia | ✅ |
+| 后端、爬虫 Code Review  | master | Dormitabnia | ✅ |
 | 迁移至腾讯云  | 无 | iamGeoWat | ✅ |
 | 使用新版文案 | TBD | TBD |  |
-| 验证码识别模型训练 | TBD | Dormitabnia |  |
+| 验证码识别模型训练 | master | Dormitabnia | ✅ |
+| 验证码识别Integration | master | iamGeoWat |  |
 
 ### Git 操作标准 (参考 Git-flow)
 开发前的操作
