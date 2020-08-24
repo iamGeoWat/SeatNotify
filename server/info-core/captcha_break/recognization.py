@@ -11,7 +11,7 @@ import string
 characters = string.digits + string.ascii_uppercase
 width, height, n_len, n_class = 128, 64, 4, len(characters)
 
-model = load_model('cnn.h5')
+model = load_model('captcha_break/cnn.h5')
 
 
 def preprocess(path):
