@@ -14,18 +14,28 @@ import pandas as pd
 import redis
 import sentry_sdk
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import Select
 from captcha_break.recognization import captcha_break_from_url
-# from sentry_sdk import capture_message, capture_exception
 
 sentry_sdk.init("https://e87c6824373b41d1b4bd2eeadb579257@sentry.io/4993408")  # 监控插件sentry
-
 Redis = redis.StrictRedis('127.0.0.1', 6379)
-
-# firefox = r'/usr/local/bin/geckodriver'  # 目录下的geckodriver解压后放在这个位置
-firefox = r'/usr/local/bin/geckodriver'
+firefox = r'/usr/local/bin/geckodriver' # 目录下的geckodriver解压后放在这个位置
 profile = webdriver.FirefoxProfile()
 profile.set_preference("network.proxy.type", 0)
 driver = webdriver.Firefox(executable_path=firefox, firefox_profile=profile)
+driver.set_window_size(width=1024, height=768, windowHandle='current')
+actions = ActionChains(driver)
+
+
+# 登录态失去时的处理方法
+def handle_expire():
+    print('TOEFL core login session expired. Please re-login.')
+    # sentry 错误上报，邮件提醒管理员后手动重启爬虫
+    # sentry_sdk.capture_exception(Exception('TOEFL core login session expired. Please re-login.'))
+    sentry_sdk.capture_message('TOEFL core login session expired. Please re-login.', level='error')
+    # sys.exit(1)
+
 
 # login procedure
 driver.get('https://toefl.neea.cn/login')
@@ -41,13 +51,19 @@ captcha = captcha_break_from_url(captcha_url)
 driver.find_element(By.ID, "verifyCode").send_keys(captcha)
 driver.find_element(By.ID, "btnLogin").click()
 time.sleep(5)
-linkList = driver.find_elements(By.TAG_NAME, "a")
-for link in linkList:
-    if link.get_attribute("innerHTML") == "考位查询":
-        driver.switch_to.frame(link)
-        link.find_element_by_xpath("..").click()
-print(captcha)
-time.sleep(800)  # 80秒时间，在弹出的firefox浏览器登录
+driver.get(driver.current_url+"#!/testSeat")
+time.sleep(1)
+driver.find_element(By.ID, "centerProvinceCity").click()
+time.sleep(0.5)
+select = Select(driver.find_element(By.ID, "centerProvinceCity"))
+select.select_by_index(2)
+driver.find_element(By.ID, "testDays").click()
+time.sleep(0.5)
+select = Select(driver.find_element(By.ID, "testDays"))
+select.select_by_index(2)
+time.sleep(1)
+actions.click(driver.find_element(By.ID, "btnQuerySeat")).perform()
+print('-----------prepared for cycle start.--------------')
 
 # 获取考试城市
 citiesJSON = driver.execute_script('return $.getJSON("/getTestCenterProvinceCity")')  # 通过接口拿到考试城市数据
@@ -59,21 +75,11 @@ for i in range(len(citiesJSON)):
     for city in cities:
         citiesList.append(city['cityNameEn'])
 
-
-# 登录态失去时的处理方法
-def handle_expire():
-    print('TOEFL core login session expired. Please re-login.')
-    # sentry 错误上报，邮件提醒管理员后手动重启爬虫
-    # sentry_sdk.capture_exception(Exception('TOEFL core login session expired. Please re-login.'))
-    sentry_sdk.capture_message('TOEFL core login session expired. Please re-login.', level='error')
-    # sys.exit(1)
-
-
 # 获取考试日
 daysList = None
 try:
     daysJSON = driver.execute_script('return $.getJSON("testDays")')
-    print(daysJSON)
+    print('daysJSON is fetched.')
     daysList = list(daysJSON)
     if not str.isdigit(daysList[0][0]):
         handle_expire()
@@ -150,4 +156,4 @@ while True:
     update_timestamp = time.time()
     Redis.set('update_timestamp', int(update_timestamp))
     Redis.publish('update_timestamp', int(update_timestamp))
-    time.sleep(10)
+    time.sleep(5)
