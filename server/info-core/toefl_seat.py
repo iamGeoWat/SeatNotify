@@ -18,6 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
 from captcha_break.recognization import captcha_break_from_url
 
+# settings
 sentry_sdk.init("https://e87c6824373b41d1b4bd2eeadb579257@sentry.io/4993408")  # 监控插件sentry
 Redis = redis.StrictRedis('127.0.0.1', 6379)
 firefox = r'/usr/local/bin/geckodriver' # 目录下的geckodriver解压后放在这个位置
@@ -38,31 +39,35 @@ def handle_expire():
 
 
 # login procedure
-driver.get('https://toefl.neea.cn/login')
-time.sleep(5)
-driver.find_element(By.ID, "userName").click()
-driver.find_element(By.ID, "userName").send_keys("8399558")
-driver.find_element(By.ID, "textPassword").click()
-driver.find_element(By.ID, "textPassword").send_keys("LKX@666")
-driver.find_element(By.ID, "verifyCode").click()
-time.sleep(2)
-captcha_url = driver.find_element(By.ID, "chkImg").get_attribute("src")
-captcha = captcha_break_from_url(captcha_url)
-driver.find_element(By.ID, "verifyCode").send_keys(captcha)
-driver.find_element(By.ID, "btnLogin").click()
-time.sleep(5)
-driver.get(driver.current_url+"#!/testSeat")
-time.sleep(1)
-driver.find_element(By.ID, "centerProvinceCity").click()
-time.sleep(0.5)
-select = Select(driver.find_element(By.ID, "centerProvinceCity"))
-select.select_by_index(2)
-driver.find_element(By.ID, "testDays").click()
-time.sleep(0.5)
-select = Select(driver.find_element(By.ID, "testDays"))
-select.select_by_index(2)
-time.sleep(1)
-actions.click(driver.find_element(By.ID, "btnQuerySeat")).perform()
+def login_prepare():
+    driver.get('https://toefl.neea.cn/login')
+    time.sleep(5)
+    driver.find_element(By.ID, "userName").click()
+    driver.find_element(By.ID, "userName").send_keys("8399558")
+    driver.find_element(By.ID, "textPassword").click()
+    driver.find_element(By.ID, "textPassword").send_keys("LKX@666")
+    driver.find_element(By.ID, "verifyCode").click()
+    time.sleep(2)
+    captcha_url = driver.find_element(By.ID, "chkImg").get_attribute("src")
+    captcha = captcha_break_from_url(captcha_url)
+    driver.find_element(By.ID, "verifyCode").send_keys(captcha)
+    driver.find_element(By.ID, "btnLogin").click()
+    time.sleep(5)
+    driver.get(driver.current_url+"#!/testSeat")
+    time.sleep(1)
+    driver.find_element(By.ID, "centerProvinceCity").click()
+    time.sleep(0.5)
+    select = Select(driver.find_element(By.ID, "centerProvinceCity"))
+    select.select_by_index(2)
+    driver.find_element(By.ID, "testDays").click()
+    time.sleep(0.5)
+    select = Select(driver.find_element(By.ID, "testDays"))
+    select.select_by_index(2)
+    time.sleep(1)
+    actions.click(driver.find_element(By.ID, "btnQuerySeat")).perform()
+
+
+login_prepare()
 print('-----------prepared for cycle start.--------------')
 
 # 获取考试城市
