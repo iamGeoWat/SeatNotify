@@ -78,7 +78,6 @@ def login_prepare():
         actions.move_to_element_with_offset(query_button, 5, 5).perform()
         time.sleep(1)
         actions.click(query_button).perform()
-        time.sleep(1)
 
 
 driver.get('https://toefl.neea.cn/login')
