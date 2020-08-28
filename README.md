@@ -10,7 +10,7 @@
 | 迁移至腾讯云  | 无 | iamGeoWat | ✅ |
 | 使用新版文案 | TBD | TBD |  |
 | 验证码识别模型训练 | master | Dormitabnia | ✅ |
-| 验证码识别Integration | master | iamGeoWat |  |
+| 验证码识别Integration | master | iamGeoWat | ✅ |
 
 ### Git 操作标准 (参考 Git-flow)
 开发前的操作
