@@ -78,6 +78,7 @@ def login_prepare():
         actions.move_to_element_with_offset(query_button, 5, 5).perform()
         time.sleep(1)
         actions.click(query_button).perform()
+        time.sleep(1)
 
 
 driver.get('https://toefl.neea.cn/login')
@@ -85,7 +86,7 @@ login_prepare()
 print('-----------prepared for cycle start.--------------')
 
 # 获取考试城市
-time.sleep(5)
+time.sleep(10)
 citiesJSON = driver.execute_script('return $.getJSON("/getTestCenterProvinceCity")')  # 通过接口拿到考试城市数据
 
 # 形成考试城市数组
