@@ -143,7 +143,7 @@ while True:
                     df['date'] = date
                     storage = pd.concat([storage, df], ignore_index=True)
                     print(storage)
-                sleep_time = round(random.uniform(1, 2), 1)  # 请求间隔一个随机时间，反爬
+                sleep_time = round(random.uniform(2, 3), 1)  # 请求间隔一个随机时间，反爬
                 time.sleep(sleep_time)
             # 有时候登录之后如果不通过鼠标主动地点击按钮，发起一次考位查询，就会一直在这里报错。应该是反爬策略
             # 手动退出登录也会产生该异常，目前无法分辨，出现该异常时作为登录态消失处理
