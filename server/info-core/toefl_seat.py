@@ -134,7 +134,7 @@ while True:
                 elif not dataJSON['status']:
                     print(city, date, "NO data")
                     print('status:', dataJSON['status'])
-                    time.sleep(0.5)
+                    time.sleep(round(random.uniform(2, 3), 1))
                     continue
                 # 成功拿到数据
                 print(city, date, "data fetched successfully!")
