@@ -119,7 +119,7 @@ while True:
     # valid_data设为false，来避免对redis写入。
     print('A new round of data fetching started.')
     for city in citiesList:
-        for date in daysList[0:9]:  # 只拿最近的10个考试日信息
+        for date in daysList[0:29]:  # 只拿最近的30个考试日信息
             print('Fetching data from ' + city + ' at ' + date)
             js = 'return $.getJSON("testSeat/queryTestSeats",{city: "%s",testDay: "%s"});' % (city, date)
             try:
@@ -134,7 +134,7 @@ while True:
                 elif not dataJSON['status']:
                     print(city, date, "NO data")
                     print('status:', dataJSON['status'])
-                    time.sleep(round(random.uniform(2, 3), 1))
+                    time.sleep(round(random.uniform(1, 2), 1))
                     continue
                 # 成功拿到数据
                 print(city, date, "data fetched successfully!")
@@ -143,7 +143,7 @@ while True:
                     df['date'] = date
                     storage = pd.concat([storage, df], ignore_index=True)
                     print(storage)
-                sleep_time = round(random.uniform(2, 3), 1)  # 请求间隔一个随机时间，反爬
+                sleep_time = round(random.uniform(1, 2), 1)  # 请求间隔一个随机时间，反爬
                 time.sleep(sleep_time)
             # 有时候登录之后如果不通过鼠标主动地点击按钮，发起一次考位查询，就会一直在这里报错。应该是反爬策略
             # 手动退出登录也会产生该异常，目前无法分辨，出现该异常时作为登录态消失处理
