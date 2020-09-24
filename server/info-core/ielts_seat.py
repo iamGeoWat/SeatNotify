@@ -37,12 +37,12 @@ def restart_program():
 
 
 def login_prepare():
-    time.sleep(5)
+#     time.sleep(5)
     driver.find_element(By.ID, 'userId').click()
     driver.find_element(By.ID, "userId").send_keys("ldsxxs@163.com")
     driver.find_element(By.ID, "userPwd").click()
     driver.find_element(By.ID, "userPwd").send_keys("Liuxikai1998")
-    time.sleep(2)
+#     time.sleep(2)
     captcha_url = driver.find_element(By.ID, "chkImg").get_attribute("src")
     captcha = captcha_break_from_url(captcha_url)
     driver.find_element(By.ID, "checkImageCode").send_keys(captcha)
@@ -52,11 +52,11 @@ def login_prepare():
         login_prepare()
     else:
         driver.execute_script("loadPage('querySeat?productId=IELTSPBT');")
-        time.sleep(1)
+#         time.sleep(1)
         driver.find_element(By.ID, "months").find_elements_by_xpath(".//*")[0].find_element_by_xpath("//input").click()
-        time.sleep(0.5)
+#         time.sleep(0.5)
         driver.find_element(By.ID, "mvfSiteProvinces211").click()
-        time.sleep(1)
+#         time.sleep(1)
         query_button = driver.find_element(By.ID, "btnSearch")
         driver.execute_script("arguments[0].scrollIntoView();", query_button)
         time.sleep(1)
@@ -64,6 +64,7 @@ def login_prepare():
         query_button.click()
 
 
+driver.implicitly_wait(20) # seconds
 driver.get('https://ielts.neea.cn/login')
 login_prepare()
 print('-----------prepared for cycle start.--------------')
@@ -107,11 +108,11 @@ while True:
                 dataJSON = driver.execute_script(js)
                 if dataJSON is None:
                     print(f"------------------ {month} Error!")
-                    time.sleep(1)
+                    time.sleep(1.5)
                     continue
                 elif ('msg' in dataJSON) and (dataJSON['msg'] == 'Error'):
                     print(province, month, "NO data")
-                    time.sleep(0.5)
+                    time.sleep(1.5)
                     continue
                 else:
                     print(province, month, "data fetched")

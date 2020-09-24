@@ -47,33 +47,33 @@ def handle_expire():
 
 # login procedure
 def login_prepare():
-    time.sleep(5)
+#     time.sleep(5)
     driver.find_element(By.ID, "userName").click()
     if driver.find_element(By.ID, "userName").get_attribute("value") != "8399558":
         driver.find_element(By.ID, "userName").send_keys("8399558")
     driver.find_element(By.ID, "textPassword").click()
     driver.find_element(By.ID, "textPassword").send_keys("LKX@666")
     driver.find_element(By.ID, "verifyCode").click()
-    time.sleep(2)
+#     time.sleep(2)
     captcha_url = driver.find_element(By.ID, "chkImg").get_attribute("src")
     captcha = captcha_break_from_url(captcha_url)
     driver.find_element(By.ID, "verifyCode").send_keys(captcha)
     driver.find_element(By.ID, "btnLogin").click()
-    time.sleep(5)
+#     time.sleep(5)
     if driver.current_url == 'https://toefl.neea.cn/login':
         login_prepare()
     else:
         driver.get(driver.current_url + "#!/testSeat")
-        time.sleep(1)
+#         time.sleep(1)
         driver.find_element(By.ID, "centerProvinceCity").click()
-        time.sleep(0.5)
+#         time.sleep(0.5)
         select = Select(driver.find_element(By.ID, "centerProvinceCity"))
         select.select_by_index(2)
         driver.find_element(By.ID, "testDays").click()
         time.sleep(0.5)
         select = Select(driver.find_element(By.ID, "testDays"))
         select.select_by_index(2)
-        time.sleep(1)
+#         time.sleep(1)
         query_button = driver.find_element(By.ID, "btnQuerySeat")
         actions.move_to_element_with_offset(query_button, 5, 5).perform()
         time.sleep(1)
@@ -81,6 +81,7 @@ def login_prepare():
         time.sleep(1)
 
 
+driver.implicitly_wait(20) # seconds
 driver.get('https://toefl.neea.cn/login')
 login_prepare()
 print('-----------prepared for cycle start.--------------')
