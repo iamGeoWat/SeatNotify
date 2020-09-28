@@ -150,7 +150,7 @@ while True:
             # 手动退出登录也会产生该异常，目前无法分辨，出现该异常时作为登录态消失处理
             except sce.JavascriptException as e:
                 print(str(e))
-                handle_expire()
+                # handle_expire()
                 # print('A manual request needed!')
                 # valid_data = True  # 本来这里是False，但是实际使用里会有问题，有的考场本来就没考位信息，一个这样的考场就导致Redis不写入了
                 # time.sleep(2)
@@ -159,6 +159,7 @@ while True:
                 print('Exception occur!', e.__class__)
                 print(str(e))
                 sentry_sdk.capture_exception(e)
+                handle_expire()
         if not valid_data:
             break
 
