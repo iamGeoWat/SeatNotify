@@ -1,5 +1,7 @@
+*托福雅思服务器端反爬手段道高一尺，作者因返学无暇魔高一丈，info-core暂时处于不可用状态。
+
 # SeatNotify
-托福、雅思、GRE考位查询、考位释放提醒。TOEFL, IELTS, GRE seat information and seat release notification service.
+托福、雅思、GRE考位查询、空考位提醒。微信小程序大赛全国二等奖项目。TOEFL, GRE seat availability query and release notification service.
 
 ### 任务
 |  Task | Branch | 谁做 | 完成情况 |
@@ -12,7 +14,7 @@
 | 验证码识别模型训练 | master | Dormitabnia | ✅ |
 | 验证码识别Integration | master | iamGeoWat | ✅ |
 
-### Git 操作标准 (参考 Git-flow)
+### Git 操作标准请参考 Git-flow
 开发前的操作
 1. 克隆仓库到本地
 
