@@ -1,5 +1,7 @@
 *托福雅思服务器端反爬手段道高一尺，作者因返学无暇魔高一丈，info-core暂时处于不可用状态。
 
+![kankanad](https://user-images.githubusercontent.com/23111825/132955198-a89d581c-9a0f-4903-a586-60b745efe25a.jpg)
+
 # SeatNotify
 托福、雅思、GRE考位查询、空考位提醒。微信小程序大赛全国二等奖项目。TOEFL, GRE seat availability query and release notification service.
 
