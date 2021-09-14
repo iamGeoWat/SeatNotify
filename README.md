@@ -41,6 +41,4 @@
     2. git pull (获取 master 分支的最新修改)
     3. git checkout your-branch (切回你的开发分支)
     4. git merge (将 master 上的修改融入进你的仓库，有 conflict 就要处理)
-    
-    要是 master 在你开发的时间里没有修改，上面四步就免了。
-    5. 去 Github 代码仓库里提 Pull Request
+    5. 去 Github 代码仓库里提 Pull Request（要是 master 在你开发的时间里没有修改，上面四步就免了）
