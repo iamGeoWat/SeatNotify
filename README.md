@@ -32,15 +32,15 @@
 修改后的操作
     
 1. 你的分支有修改后，将更新 push 到 Github
-    - git add . (添加修改到暂存区)
-    - git commit -m 'commit-message' (commit你的修改，commmit message写上修改了什么)
-    - git push origin your-branch (将修改push到远程)
+    1. git add . (添加修改到暂存区)
+    2. git commit -m 'commit-message' (commit你的修改，commmit message写上修改了什么)
+    3. git push origin your-branch (将修改push到远程)
 
 2. 此分支要做的事情开发完毕，提 Pull Request
-    - git checkout master (切回 master 分支)
-    - git pull (获取 master 分支的最新修改)
-    - git checkout your-branch (切回你的开发分支)
-    - git merge (将 master 上的修改融入进你的仓库，有 conflict 就要处理)
+    1. git checkout master (切回 master 分支)
+    2. git pull (获取 master 分支的最新修改)
+    3. git checkout your-branch (切回你的开发分支)
+    4. git merge (将 master 上的修改融入进你的仓库，有 conflict 就要处理)
     
     要是 master 在你开发的时间里没有修改，上面四步就免了。
-    - 去 Github 代码仓库里提 Pull Request
+    5. 去 Github 代码仓库里提 Pull Request
